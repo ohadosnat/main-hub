@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+  background-color: #12092a;
+  @apply text-white;
+}
+
+.global-transition {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
