@@ -1,7 +1,7 @@
 .App {
   text-align: center;
   background-color: #12092a;
-  @apply text-white;
+  @apply text-white font-rubik;
 }
 
 .global-transition {
@@ -11,3 +11,19 @@
   transition-duration: 300ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.current {
+  @apply text-[#0CFFC5];
+}
+
+.disable-scrollbars::-webkit-scrollbar {
+  background: transparent; /* Chrome/Safari/Webkit */
+  width: 0px;
+}
+
+.disable-scrollbars {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+/* FIXME: SCROLLBAR STYLING */
