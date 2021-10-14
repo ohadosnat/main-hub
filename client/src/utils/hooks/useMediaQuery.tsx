@@ -20,9 +20,14 @@ export const useMediaQuery = (query: string): boolean => {
 };
 
 // Breakpoints - from sm to 2xl
-// FIXME: UPDATE THAT IT WILL MATCH MIN AND MAX WIDTH
-export const useIsSmall = () => useMediaQuery("(min-width: 640px)");
-export const useIsMedium = () => useMediaQuery("(min-width: 768px)");
-export const useIsLarge = () => useMediaQuery("(min-width: 1024px)");
-export const useIsXL = () => useMediaQuery("(min-width: 1280px)");
+export const useIsSmall = () =>
+  useMediaQuery("(min-width: 640px) and (max-width: 767px)");
+export const useIsMedium = () =>
+  useMediaQuery("(min-width: 768px) and (max-width: 1023px)");
+export const useIsLarge = () =>
+  useMediaQuery("(min-width: 1024px) and (max-width: 1279px)");
+export const useIsXL = () =>
+  useMediaQuery("(min-width: 1280px) and (max-width: 1535px)");
 export const useIsXXL = () => useMediaQuery("(min-width: 1536px)");
+
+export const useIsNotMobile = () => useMediaQuery("(min-width: 768px)"); // targets tablet and up

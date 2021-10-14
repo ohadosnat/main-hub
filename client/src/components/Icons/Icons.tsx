@@ -1,6 +1,6 @@
 type SVGProps = React.SVGProps<SVGSVGElement>;
 
-// Base SVG Component
+// Base SVG Component (for icons)
 const SVGComponent = (props: SVGProps) => (
   <svg
     viewBox="0 0 32 32"

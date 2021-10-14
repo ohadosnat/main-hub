@@ -23,7 +23,7 @@ function ForecastItem({ data, type }: Props) {
   return (
     <div
       key={data.dt}
-      className="mr-4 flex flex-col justify-center items-center lg:text-lg 2xl:mr-6"
+      className="mr-4 flex flex-col justify-center items-center lg:text-lg xl:mr-6 xl:mt-6"
     >
       <p className="">{timeValue}:00</p>
       <img

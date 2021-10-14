@@ -17,7 +17,7 @@ const WeatherEmptyState = () => {
     setInputValue(e.target.value);
 
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center">
+    <div className="h-full w-full flex flex-col justify-center items-center z-[1]">
       <h1 className="text-2xl font-bold font-merriweather">
         Hey, Please enter a location
       </h1>

@@ -1,12 +1,24 @@
-// For App.tsx useReducer
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  BackgroundColorPayload,
+  ContainerHeightPayload,
+  IStylesState,
+} from "../types/redux/global";
 
-import { ActionType, IStylesState } from "../types/stylesReducer";
-export const stylesReducer = (
-  state: IStylesState,
-  action: ActionType
-): IStylesState => {
-  switch (action.type) {
-    case "BG_COLOR": {
+const initialState: IStylesState = {
+  backgroundColor: "",
+  containerHeight: "",
+  isNight: true,
+};
+
+const globalSlice = createSlice({
+  name: "global",
+  initialState,
+  reducers: {
+    setBackgroundColor: (
+      state,
+      action: PayloadAction<BackgroundColorPayload>
+    ) => {
       const { payload } = action;
       // checks for pathname -> then if it's night (might change it the otherway when i'll have more pages)
       if (payload.pathname === "/weather") {
@@ -16,8 +28,11 @@ export const stylesReducer = (
         return { ...state, backgroundColor };
       }
       return { ...state, backgroundColor: "bg-[#12092A] text-white" };
-    }
-    case "CONTAINER_HEIGHT": {
+    },
+    setContainerHeight: (
+      state,
+      action: PayloadAction<ContainerHeightPayload>
+    ) => {
       const { payload } = action;
       const isHome = payload.pathname === "/";
       const isWeatherWithoutLocation =
@@ -26,13 +41,15 @@ export const stylesReducer = (
         return { ...state, containerHeight: "h-full" };
       }
       return { ...state, containerHeight: "h-full landscape:h-auto" };
-    }
-    case "TOGGLE_NIGHT": {
+    },
+    toggleNight: (state, action: PayloadAction<string>) => {
       const { payload } = action;
-      if (payload.time < "19:00") return { ...state, isNight: false };
+      if (payload < "19:00") return { ...state, isNight: false };
       return { ...state, isNight: true };
-    }
-    default:
-      return state;
-  }
-};
+    },
+  },
+});
+
+export const { setBackgroundColor, setContainerHeight, toggleNight } =
+  globalSlice.actions;
+export default globalSlice.reducer;

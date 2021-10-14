@@ -9,11 +9,25 @@ const Weather = () => {
 
   return (
     <div className="h-full w-full flex flex-col md:justify-center lg:flex-row lg:items-center">
+      <svg
+        className="absolute bottom-0 left-0 h-3/6 lg:h-auto lg:w-full overflow-hidden"
+        height="200"
+        viewBox="0 0 1384 200"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          opacity="0.5"
+          d="M-28 36.1495C-28 36.1495 97.386 120.149 692 37.1496C1286.61 -45.8495 1412 36.1495 1412 36.1495V269.761H-28V36.1495Z"
+          fill="white"
+        />
+      </svg>
+
       {!weather.locationByName ? (
         <WeatherEmptyState />
       ) : (
         <>
-          <div className="my-6 px-6 font-merriweather text-center cursor-default flex flex-col justify-center md:mt-0 lg:mr-20 lg:my-0 lg:px-0">
+          <div className="my-6 px-6 font-merriweather text-center cursor-default flex flex-col justify-center md:mt-0 lg:my-0 lg:px-0 lg:mr-0 lg:flex-grow">
             <h3>Israel</h3>
             <h2 className="mb-3 text-4xl font-bold">
               {weather.locationByName}

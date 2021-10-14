@@ -1,6 +1,6 @@
 /* 
 TODO:
-[] change divs to buttons
+[x] change divs to buttons
 [x] current time
 [] degrees
 [x] mini play buttons (prev, next, play/pause)
@@ -13,9 +13,9 @@ TODO:
 [] mini player state (open/closed)
 */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useIsMedium } from "../../utils/hooks/useMediaQuery";
+import { useIsNotMobile } from "../../utils/hooks/useMediaQuery";
 import { MenuIcon, NavigationIcon, MusicNoteIcon } from "../Icons/Icons";
 import MiniPlayer from "../MiniPlayer/MiniPlayer";
 
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const Overlay = ({ clock, pathname }: Props) => {
-  const isTablet = useIsMedium();
+  const isNotMobile = useIsNotMobile();
 
   return (
     <header>
@@ -40,7 +40,7 @@ const Overlay = ({ clock, pathname }: Props) => {
         to="/nav"
         className={`${
           pathname === "/nav" && "current"
-        } w-10 hover:scale-110 transform global-transition absolute bottom-6 left-6 md:bottom-10 md:right-10`}
+        } w-10 hover:scale-110 transform global-transition absolute bottom-6 left-6 md:bottom-10 md:right-10 z-[1]`}
       >
         <NavigationIcon className="fill-current" />
       </Link>
@@ -48,17 +48,17 @@ const Overlay = ({ clock, pathname }: Props) => {
         to="/"
         className={`${
           pathname === "/" && "current"
-        } mx-auto w-10 hover:scale-110 transform global-transition absolute bottom-6 inset-x-0 md:bottom-10`}
+        } mx-auto w-10 hover:scale-110 transform global-transition absolute bottom-6 inset-x-0 md:bottom-10 z-[1]`}
       >
         <MenuIcon className="fill-current stroke-current" />
       </Link>
-      <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10">
+      <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-[1]">
         <Link to="/player" className={`${pathname === "/player" && "current"}`}>
           <MusicNoteIcon className="fill-current w-10 hover:scale-110 transform global-transition" />
         </Link>
-        {isTablet && <MiniPlayer />}
+        {isNotMobile && <MiniPlayer />}
       </div>
-      {!isTablet && <MiniPlayer />}
+      {!isNotMobile && <MiniPlayer />}
     </header>
   );
 };

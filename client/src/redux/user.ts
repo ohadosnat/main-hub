@@ -1,17 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-interface UserSliceState {
-  uid: string;
-  name: string;
-  theme: "light" | "dark";
-  weather: {
-    locationByName: string | undefined;
-    locatoinByCords: [number, number] | undefined;
-  };
-  player: {
-    spotifyRefreshToken: string | undefined;
-  };
-}
+import { UserSliceState } from "../types/redux/users";
 
 const initialState: UserSliceState = {
   uid: "1234",

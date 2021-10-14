@@ -1,15 +1,18 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./user";
+import globalReducer from "./global";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
+    global: globalReducer,
   },
 });
 
-type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 
 export const selectUser = (state: RootState) => state.user;
+export const selectGlobal = (state: RootState) => state.global;
 
 export default store;
 
