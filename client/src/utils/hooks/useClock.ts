@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Creates a new clock that is being updated.
+ *
+ * @returns the current time as a `string` in the format of `HH:MM`
+ * @example "04:20"
+ */
 export const useClock = (): string => {
   const [time, setTime] = useState(new Date());
 

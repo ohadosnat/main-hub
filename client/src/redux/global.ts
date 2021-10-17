@@ -1,12 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  BackgroundColorPayload,
-  ContainerHeightPayload,
-  IStylesState,
-} from "../types/redux/global";
 
 const initialState: IStylesState = {
-  backgroundColor: "",
+  pageTheme: "",
   containerHeight: "",
   isNight: true,
 };
@@ -15,41 +10,74 @@ const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
-    setBackgroundColor: (
-      state,
-      action: PayloadAction<BackgroundColorPayload>
-    ) => {
-      const { payload } = action;
-      // checks for pathname -> then if it's night (might change it the otherway when i'll have more pages)
-      if (payload.pathname === "/weather") {
-        const backgroundColor = payload.isNight
-          ? "bg-gradient-to-bl from-[#1D2570] via-[#462D98] to-[#7635C8] text-white"
-          : "bg-gradient-to-bl from-[#FF9B63] via-[#FFCE84] to-[#FFE8AB] text-black";
-        return { ...state, backgroundColor };
+    /**
+     * Sets the `global` page theme based on the current router `pathname` and `isNight`
+     *
+     * @param payload - includes the `payload` object `{ pathname: string, isNight: boolean }`
+     * @returns an updated `pageTheme` value for the reducer's `state`.
+     * @example
+     *
+     * const isNight = false; // this value will usually be from a state (like redux).
+     * const { pathname } = useLocation();
+     *
+     * useEffect(() => {
+     *    dispatch(setPageTheme({pathname, isNight}))
+     * }, [pathname])
+     */
+    setPageTheme: (state, action: PayloadAction<BackgroundColorPayload>) => {
+      const { isNight, pathname } = action.payload;
+      if (pathname === "/weather") {
+        return { ...state, pageTheme: !isNight ? "day" : "night" };
       }
-      return { ...state, backgroundColor: "bg-[#12092A] text-white" };
+      if (pathname === "/player") {
+        return {
+          ...state,
+          pageTheme: "player",
+        };
+      }
+      return { ...state, pageTheme: "" };
     },
+
+    /**
+     * Sets the `global`'s container height value based on the current router `pathname` and `locationByName`
+     * @param payload - includes the `pathname` and `locationByName`
+     * @example
+     * const locationByName = "New York City"
+     * const { pathname } = useLocation();
+     *
+     *  useEffect(() => {
+     *    dispatch(setContainerHeight({ pathname, locationByName }));
+     * }, [pathname])
+     */
     setContainerHeight: (
       state,
       action: PayloadAction<ContainerHeightPayload>
     ) => {
-      const { payload } = action;
-      const isHome = payload.pathname === "/";
+      const { pathname, locationByName } = action.payload;
+      const isHome = pathname === "/";
+      const isSettings = pathname === "/settings";
       const isWeatherWithoutLocation =
-        payload.pathname === "/weather" && !payload.locationByName;
-      if (isHome || isWeatherWithoutLocation) {
+        pathname === "/weather" && !locationByName;
+      if (isHome || isWeatherWithoutLocation || isSettings) {
         return { ...state, containerHeight: "h-full" };
       }
       return { ...state, containerHeight: "h-full landscape:h-auto" };
     },
+
+    /**
+     * Toggles the `global` night value based on the `payload`'s value.
+     *
+     * @param payload - The current time (`HH:MM`) value.
+     * @example toggleNight("13:00")
+     */
     toggleNight: (state, action: PayloadAction<string>) => {
       const { payload } = action;
-      if (payload < "19:00") return { ...state, isNight: false };
+      const time = parseInt(payload.slice(0, 2));
+      if (time >= 6 && time < 18) return { ...state, isNight: false };
       return { ...state, isNight: true };
     },
   },
 });
-
-export const { setBackgroundColor, setContainerHeight, toggleNight } =
+export const { setPageTheme, setContainerHeight, toggleNight } =
   globalSlice.actions;
 export default globalSlice.reducer;

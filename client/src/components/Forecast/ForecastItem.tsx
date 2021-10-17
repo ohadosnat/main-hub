@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IWeather, WeatherDaily } from "../../types/weather";
 import { calcAvgTemp, getHours } from "../../utils/weather";
 

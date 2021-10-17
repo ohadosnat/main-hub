@@ -3,3 +3,54 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-player-main: #000;
+    --color-player-secondary: #000;
+    --bg-artwork: black;
+    --color-indicator: #000;
+  }
+
+  .day {
+    --color-text-skin: black !important;
+    --color-fill: #ff9b63;
+    --color-via: #ffce84;
+    --color-to: #ffe8ab;
+    --color-forecast: 255, 255, 255;
+    --color-forecast-arrow: #ff9b63;
+    --color-box: white !important;
+    --color-wave: white;
+  }
+
+  .night {
+    --color-text-skin: white !important;
+    --color-fill: #1d2570;
+    --color-via: #462d98;
+    --color-to: #7635c8;
+    --color-forecast: 17, 17, 17;
+    --color-forecast-arrow: #512ea4;
+    --color-box: white !important;
+    --color-wave: black;
+  }
+
+  .light {
+    --color-text-skin: black;
+    --color-skin: #aedada;
+    --color-main: #f0f7f7;
+    --color-box: #ffffff;
+    --color-border: black;
+  }
+
+  .dark {
+    --color-text-skin: white;
+    --color-skin: #2b3865;
+    --color-main: #081540;
+    --color-box: #15224f;
+    --color-border: transparent;
+  }
+
+  .player {
+    --color-text-skin: white;
+  }
+}

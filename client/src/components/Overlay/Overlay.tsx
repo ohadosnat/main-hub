@@ -10,10 +10,10 @@ TODO:
     [x] nav
     [x] home
 [x] current page indicator
-[] mini player state (open/closed)
+[x] mini player state (open/closed)
+  - won't be open/closed, instead it will dispatch actions to the global spotify state (redux)
 */
 
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useIsNotMobile } from "../../utils/hooks/useMediaQuery";
 import { MenuIcon, NavigationIcon, MusicNoteIcon } from "../Icons/Icons";
@@ -29,10 +29,10 @@ const Overlay = ({ clock, pathname }: Props) => {
 
   return (
     <header>
-      <h3 className="text-2xl font-medium flex justify-start select-none absolute top-6 left-6 md:top-10 md:left-10">
+      <h3 className="text-2xl font-medium flex justify-start select-none absolute top-6 left-6 md:top-10 md:left-10 z-[99]">
         30°c
       </h3>
-      <h3 className="text-2xl font-medium col-start-3 flex justify-end select-none absolute top-6 right-6 md:top-10 md:right-10">
+      <h3 className="text-2xl font-medium col-start-3 flex justify-end select-none absolute top-6 right-6 md:top-10 md:right-10 z-[99]">
         {clock}
       </h3>
 
@@ -40,7 +40,7 @@ const Overlay = ({ clock, pathname }: Props) => {
         to="/nav"
         className={`${
           pathname === "/nav" && "current"
-        } w-10 hover:scale-110 transform global-transition absolute bottom-6 left-6 md:bottom-10 md:right-10 z-[1]`}
+        } w-10 hover:scale-110 transform global-transition absolute bottom-6 left-6 md:bottom-10 md:right-10 z-[99]`}
       >
         <NavigationIcon className="fill-current" />
       </Link>
@@ -48,17 +48,17 @@ const Overlay = ({ clock, pathname }: Props) => {
         to="/"
         className={`${
           pathname === "/" && "current"
-        } mx-auto w-10 hover:scale-110 transform global-transition absolute bottom-6 inset-x-0 md:bottom-10 z-[1]`}
+        } mx-auto w-10 hover:scale-110 transform global-transition absolute bottom-6 inset-x-0 md:bottom-10 z-[99]`}
       >
         <MenuIcon className="fill-current stroke-current" />
       </Link>
-      <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-[1]">
+      <div className="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-[99]">
         <Link to="/player" className={`${pathname === "/player" && "current"}`}>
           <MusicNoteIcon className="fill-current w-10 hover:scale-110 transform global-transition" />
         </Link>
-        {isNotMobile && <MiniPlayer />}
+        {isNotMobile && pathname !== "/player" && <MiniPlayer />}
       </div>
-      {!isNotMobile && <MiniPlayer />}
+      {!isNotMobile && pathname !== "/player" && <MiniPlayer />}
     </header>
   );
 };
