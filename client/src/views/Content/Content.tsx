@@ -2,6 +2,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "../Home/Home";
 import Player from "../Player/Player";
 import Settings from "../Settings/Settings";
+import TestingZone from "../TestingZone";
 import Weather from "../Weather/Weather";
 
 const Content = () => {
@@ -12,6 +13,7 @@ const Content = () => {
         <Route path="/player" exact component={Player} />
         <Route path="/weather" exact component={Weather} />
         <Route path="/settings" exact component={Settings} />
+        <Route path="/testing" exact component={TestingZone} />
         <Route path="/">no match, 404 page</Route>
       </Switch>
     </main>

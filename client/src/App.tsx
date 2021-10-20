@@ -8,6 +8,8 @@ import { selectGlobal, selectUser } from "./redux/store";
 import { useClock } from "./utils/hooks/useClock";
 import { setPageTheme, setContainerHeight, toggleNight } from "./redux/global";
 import { setTheme } from "./redux/user";
+import useAuth from "./utils/hooks/useAuth";
+import useSpotifyAuth from "./utils/hooks/useSpotifyAuth";
 
 function App() {
   // Global States (Redux)
@@ -18,8 +20,11 @@ function App() {
   const { pathname } = useLocation();
   const clock = useClock();
   const dispatch = useDispatch();
+  useAuth();
+  useSpotifyAuth();
 
   // useEffects
+
   useEffect(() => {
     dispatch(toggleNight(clock));
   }, [clock]);
@@ -40,7 +45,7 @@ function App() {
   useEffect(() => {
     if (pathname === "player") return;
     dispatch(setTheme(theme));
-  }, [pathname]);
+  }, [pathname, theme]);
 
   return (
     <div className={`${pathname !== "/player" && theme} ${pageTheme}`}>

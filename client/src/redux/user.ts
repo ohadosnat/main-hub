@@ -77,10 +77,11 @@ export const userSlice = createSlice({
     },
 
     /**
-     * TODO: update this jsdocs
-     * @param state
-     * @param action
-     * @returns
+     * Sets the user's spotify credentials to the local state.
+     * @param action - The user's spotify credentials (`SpotifyAuth` type object with `isLogged` propetry).
+     * @returns the state and sets the `spotify` property to the values provided in the `payload`.
+     * @example
+     * setSpotifyCredentials({ isLogged: true, access_token: "123456", refresh_token: "123456", expires_in: 3600 })
      */
     setSpotifyCredentials: (
       state,
@@ -88,9 +89,32 @@ export const userSlice = createSlice({
     ) => {
       return { ...state, spotify: { ...action.payload } };
     },
+
+    /**
+     * Clears the user's spotify credentials from the local state and database (`Firestore`).
+     * @param action - the user's `uid`, used to for a reference to update the document.
+     * @returns the state and a "default" values for the `spotify` property.
+     */
+    clearSpotifyCredentials: (
+      state,
+      action: PayloadAction<typeof initialState.uid>
+    ) => {
+      updateUserDoc(action.payload, {
+        spotify: { isLogged: false, refresh_token: "" },
+      });
+      return {
+        ...state,
+        spotify: { isLogged: false, access_token: "", refresh_token: "" },
+      };
+    },
   },
 });
 
-export const { setLocationName, setTheme, setUser, setSpotifyCredentials } =
-  userSlice.actions;
+export const {
+  setLocationName,
+  setTheme,
+  setUser,
+  setSpotifyCredentials,
+  clearSpotifyCredentials,
+} = userSlice.actions;
 export default userSlice.reducer;
