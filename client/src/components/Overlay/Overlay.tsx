@@ -4,7 +4,7 @@ TODO:
 [x] current time
 [] degrees
 [x] mini play buttons (prev, next, play/pause)
-  [] connect to the real player
+  [x] connect to the real player
 [x] links to different pages
     [x] music
     [x] nav
@@ -14,7 +14,9 @@ TODO:
   - won't be open/closed, instead it will dispatch actions to the global spotify state (redux)
 */
 
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectSpotify } from "../../redux/store";
 import { useIsNotMobile } from "../../utils/hooks/useMediaQuery";
 import { MenuIcon, NavigationIcon, MusicNoteIcon } from "../Icons/Icons";
 import MiniPlayer from "../MiniPlayer/MiniPlayer";
@@ -26,6 +28,7 @@ interface Props {
 
 const Overlay = ({ clock, pathname }: Props) => {
   const isNotMobile = useIsNotMobile();
+  const { player } = useSelector(selectSpotify);
 
   return (
     <header>
@@ -56,9 +59,9 @@ const Overlay = ({ clock, pathname }: Props) => {
         <Link to="/player" className={`${pathname === "/player" && "current"}`}>
           <MusicNoteIcon className="fill-current w-10 hover:scale-110 transform global-transition" />
         </Link>
-        {isNotMobile && pathname !== "/player" && <MiniPlayer />}
+        {player && isNotMobile && pathname !== "/player" && <MiniPlayer />}
       </div>
-      {!isNotMobile && pathname !== "/player" && <MiniPlayer />}
+      {player && !isNotMobile && pathname !== "/player" && <MiniPlayer />}
     </header>
   );
 };

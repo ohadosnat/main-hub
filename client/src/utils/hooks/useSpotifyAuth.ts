@@ -52,17 +52,17 @@ const useSpotifyAuth = () => {
   const spotifyLogin = async (code: string): Promise<void> => {
     try {
       const userCreds: SpotifyAuthRequired = await getInitialTokens(code);
-      dispatch(setSpotifyCredentials({ ...userCreds, isLogged: true }));
       updateUserDoc(user.uid, {
         spotify: { isLogged: true, refresh_token: userCreds.refresh_token },
       });
+      window.history.pushState(null, "", window.location.pathname);
     } catch (error) {
       const errorMessage = {
         message: "an error occurred while logging in to your Spotify account",
         error,
       };
       console.error(errorMessage);
-      window.history.back();
+      window.history.pushState(null, "", window.location.pathname);
     }
   };
 

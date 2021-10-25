@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: IStylesState = {
+const initialState: IGlobalState = {
   pageTheme: "",
   containerHeight: "",
   isNight: true,
+  message: "",
+  isLoading: false,
+  showModal: true,
 };
 
 const globalSlice = createSlice({
@@ -76,8 +79,38 @@ const globalSlice = createSlice({
       if (time >= 6 && time < 18) return { ...state, isNight: false };
       return { ...state, isNight: true };
     },
+    /**
+     * Sets the global `message` value
+     * @param action - sets the message for the user.
+     * @returns the state with the updated value of `message`
+     */
+    setMessage: (state, action: PayloadAction<string>) => {
+      return { ...state, message: action.payload };
+    },
+    /**
+     * Sets the global `isLoading` value
+     * @param action - a `boolean`
+     * @returns the state with the updated value of `isLoading`
+     */
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      return { ...state, isLoading: action.payload };
+    },
+    /**
+     * Sets the global `showModal` value
+     * @param action - a `boolean`, to decide if the modal show be displayed to the user
+     * @returns the state with the updated value of `showModal`
+     */
+    setShowModal: (state, action: PayloadAction<boolean>) => {
+      return { ...state, showModal: action.payload };
+    },
   },
 });
-export const { setPageTheme, setContainerHeight, toggleNight } =
-  globalSlice.actions;
+export const {
+  setPageTheme,
+  setContainerHeight,
+  toggleNight,
+  setMessage,
+  setLoading,
+  setShowModal,
+} = globalSlice.actions;
 export default globalSlice.reducer;

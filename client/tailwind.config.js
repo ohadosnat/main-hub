@@ -14,6 +14,7 @@ module.exports = {
         skin: "var(--color-skin)",
         main: "var(--color-main)",
         box: "var(--color-box)",
+        indicator: "var(--color-indicator)",
         "player-main": "var(--color-player-main)",
         "player-secondary": "var(--color-player-secondary)",
         "forecast-arrow": "var(--color-forecast-arrow)",

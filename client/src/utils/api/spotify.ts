@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
+/* AUTH ROUTES */
+
 /**
  * Gets a authorization URL for logging in to the Spotify API.
  * @param pathname - the page that made the request, used for spotify's `redirect` after logging in.

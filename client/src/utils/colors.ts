@@ -53,11 +53,12 @@ const createCanvasContext = (): CanvasRenderingContext2D | null => {
  */
 const getColors = (r: number, g: number, b: number): TcolorPalette => {
   const { h, s, l } = RGBToHSL(r, g, b);
-  const mainLightness = l < 60 ? 60 : l;
-  const secondaryLightness = l > 70 ? 10 : l;
+  const mainLightness = l <= 69 ? 80 : l;
+  const secondaryLightness = l >= 70 ? 10 : l;
   return {
     main: HSLToHex(h, s, mainLightness),
     secondary: HSLToHex(h, s, secondaryLightness),
+    indicator: HSLToHex(h, 90, 50),
   };
 };
 
@@ -79,7 +80,7 @@ export const generateColorPalette = (
     const palette = getColors(rgba[0], rgba[1], rgba[2]);
     return palette;
   }
-  return { main: "#000", secondary: "#000" };
+  return { main: "#000", secondary: "#000", indicator: "#fff" };
 };
 
 /* --- Color Conversions --- */

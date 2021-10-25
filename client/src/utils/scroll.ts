@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 /**
  * Handles a `scroll` event on elements that need to have scroll buttons manually.
  *
@@ -19,7 +17,7 @@ export const handleScrollClick = (
   let currentTime = 0,
     increment = 20;
 
-  const animateScroll = () => {
+  const animateScroll = (): any => {
     currentTime += increment;
     const value = easeInOutQuad(currentTime, start, change, duration);
     element.scrollLeft = value;

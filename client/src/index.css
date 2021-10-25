@@ -15,6 +15,7 @@
   .day {
     --color-text-skin: black !important;
     --color-fill: #ff9b63;
+    --color-skin: #fffaef !important;
     --color-via: #ffce84;
     --color-to: #ffe8ab;
     --color-forecast: 255, 255, 255;
@@ -26,6 +27,7 @@
   .night {
     --color-text-skin: white !important;
     --color-fill: #1d2570;
+    --color-skin: #081540 !important;
     --color-via: #462d98;
     --color-to: #7635c8;
     --color-forecast: 17, 17, 17;

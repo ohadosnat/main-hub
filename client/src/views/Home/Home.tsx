@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import AppIconWrapper from "../../components/AppIconWrapper/AppIconWrapper";
+import PopupModal from "../../components/PopupModal/PopupModal";
+import { setShowModal } from "../../redux/global";
+import { selectGlobal, selectUser } from "../../redux/store";
 import {
   SettingsIcon,
   SpaceIcon,
@@ -12,12 +17,24 @@ const apps: IApps[] = [
 ];
 
 const Home = () => {
+  const { showModal } = useSelector(selectGlobal);
+  const { uid } = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (uid) dispatch(setShowModal(false));
+    else dispatch(setShowModal(true));
+  }, [uid]);
+
   return (
-    <div className="flex space-x-2 bg-box py-5 px-5 rounded-xl">
-      {apps.map((app) => (
-        <AppIconWrapper key={app.name} name={app.name} icon={app.icon} />
-      ))}
-    </div>
+    <>
+      <div className="flex space-x-2 bg-box py-5 px-5 rounded-xl">
+        {apps.map((app) => (
+          <AppIconWrapper key={app.name} name={app.name} icon={app.icon} />
+        ))}
+      </div>
+      {showModal && <PopupModal />}
+    </>
   );
 };
 

@@ -25,12 +25,12 @@ const Weather = () => {
         <WeatherEmptyState />
       ) : (
         <>
-          <div className="my-6 px-6 font-merriweather text-center cursor-default flex flex-col justify-center md:mt-0 lg:my-0 lg:px-0 lg:mr-0 lg:flex-grow">
+          <div className="my-6 px-6 text-center cursor-default flex flex-col justify-center md:mt-0 lg:my-0 lg:px-0 lg:mr-0 lg:flex-grow">
             <h3>Israel</h3>
-            <h2 className="mb-3 text-4xl font-bold">
+            <h2 className="mb-1 text-4xl font-bold">
               {weather.locationByName}
             </h2>
-            <p className="font-rubik capitalize">
+            <p className="font-rubik capitalize mb-2">
               {dummyWeather.current.weather[0].description}
             </p>
             <h1 className="text-8xl my-2">{dummyWeather.current.temp}°c</h1>

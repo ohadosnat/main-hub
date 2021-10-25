@@ -1,24 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setLocationName } from "../../redux/user";
+import { useSelector } from "react-redux";
+import { selectGlobal, selectUser } from "../../redux/store";
+import useForm from "../../utils/hooks/useForm";
+import locationChangeHandle from "../../utils/locationFormHandle";
+import Input from "../../components/Input/Input";
+import { EarthIcon } from "../../components/Icons/Icons";
 
 const WeatherEmptyState = () => {
-  const [inputValue, setInputValue] = useState<string>("");
-  const dispatch = useDispatch();
+  // const [inputValue, setInputValue] = useState<string>("");
+  const [values, changeHandle] = useForm({ location: "" });
+  const { uid } = useSelector(selectUser);
+  const { message } = useSelector(selectGlobal);
 
   const formHandle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(setLocationName(inputValue));
+    locationChangeHandle(values.location);
     console.log("✨sent!"); //FIXME: make a dispatch to add a new location (set the data and then fetch (inside the reducer))
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    setInputValue(e.target.value);
+  // If there's no user, return this state.
+  if (!uid) {
+    return (
+      <div className="h-full w-full flex flex-col justify-center items-center z-[1]">
+        <h1 className="text-2xl font-medium mb-2">
+          🌍 Hey, Please login to continue 🌍
+        </h1>
+        <p className="mb-6">
+          Visit the{" "}
+          <Link to="/settings" className="font-medium underline">
+            Settings
+          </Link>{" "}
+          page to login to your account or signup for a new one.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full flex flex-col justify-center items-center z-[1]">
-      <h1 className="text-2xl font-bold font-merriweather">
+      <h1 className="text-2xl font-medium mb-2">
         Hey, Please enter a location
       </h1>
       <p className="mb-6">
@@ -31,14 +52,15 @@ const WeatherEmptyState = () => {
         className="w-full md:w-4/6 lg:w-3/6 px-6 flex flex-col md:flex-row md:space-x-2 space-y-4 md:space-y-0"
         onSubmit={(e) => formHandle(e)}
       >
-        <input
+        <Input
           type="text"
-          name="city"
+          name="location"
           placeholder="Enter Location"
-          className="text-black flex-grow font-light rounded-md px-6 py-2 shadow-md text-center md:text-left"
-          value={inputValue}
-          onChange={handleInputChange}
-          autoComplete="off"
+          value={values.location}
+          onChange={changeHandle}
+          startIcon={
+            <EarthIcon className="flex-none w-7 h-7 fill-current mr-2" />
+          }
         />
         <input
           type="submit"
@@ -46,6 +68,7 @@ const WeatherEmptyState = () => {
           className="global-transition cursor-pointer font-light rounded-md text-center py-2 px-5 shadow-md bg-black text-white transform hover:scale-105 ring-white hover:ring-1 focus:ring-2"
         />
       </form>
+      {message && <p className="mt-4">{message}</p>}
     </div>
   );
 };

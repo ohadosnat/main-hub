@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import Button from "../components/Button/Button";
-import { selectUser } from "../redux/store";
-import useAuth from "../utils/hooks/useAuth";
+import { selectGlobal, selectUser } from "../redux/store";
+import { login, logout, signup } from "../utils/auth";
 
 const TestingZone = () => {
   const user = useSelector(selectUser);
-  const { login, logout, signup, message, loading } = useAuth();
+  const { message, isLoading } = useSelector(selectGlobal);
 
   const fakeSignup = () => {
     const email = "ohadtest@gmail.com";
@@ -23,7 +23,7 @@ const TestingZone = () => {
       <p className="font-medium text-lg">
         🧪 Heyoo welcome to the testing zone! 🧪
       </p>
-      {loading ? (
+      {isLoading ? (
         <LoadingState />
       ) : (
         <>
@@ -35,7 +35,7 @@ const TestingZone = () => {
               {user.spotify.isLogged ? (
                 <p>you are logged in to your spotify account!</p>
               ) : (
-                <Button title="spotify login" onClick={() => logout()} />
+                <Button title="spotify login" />
               )}
             </>
           ) : (

@@ -3,13 +3,11 @@ import { useEffect, useState } from "react";
 const initialArrows: IArrowDirection = { left: false, right: true };
 
 /**
- * Handles the arrow changes based on the scroll position of `element`
- *
+ * Handles the arrow changes based on the scroll position of the provided `element`
  * @param element - the element that is being used during the scroll event `HTMLDivElement`
  * @returns a stateful value, and a function to update it (`arrowsDirection`, `setArrowsDirection`)
  *
  * - `arrowsDirection` `state` which is a `boolean` object with `left` and `right` to determine if to display them. `{ left: boolean, right: boolean }`.
- *
  * - `setArrowsDirection` to set new conditions if needed (for example, based on screen size)
  * @example
  * const ref = useRef(null)
@@ -26,15 +24,18 @@ export const useScrollArrows = (
     useState<IArrowDirection>(initialArrows);
 
   const listener = () => {
-    const { scrollLeft, clientWidth, scrollWidth } = element!;
-    setPosition(scrollWidth - scrollLeft - clientWidth);
-    setStartPosition(scrollWidth - clientWidth);
+    if (element) {
+      const { scrollLeft, clientWidth, scrollWidth } = element;
+      setPosition(scrollWidth - scrollLeft - clientWidth);
+      setStartPosition(scrollWidth - clientWidth);
+    }
   };
 
   useEffect(() => {
     if (!element) return;
     element.addEventListener("scroll", listener);
-    return element.removeEventListener("scroll", listener);
+
+    return () => element.removeEventListener("scroll", listener);
   }, [element]);
 
   useEffect(() => {
