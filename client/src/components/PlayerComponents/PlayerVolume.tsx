@@ -1,25 +1,27 @@
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
 import { selectSpotify } from "../../redux/store";
+import { modalVariants } from "../../utils/animationVariants";
 import { VolumeIcon } from "../Icons/Icons";
 
 interface Props {
-  modalOpen: (type: "device" | "volume") => void;
+  modalOpen: Player.ModalOpen;
   volumeOpen: boolean;
-  container: Variants;
 }
 
-const PlayerVolume = ({ modalOpen, container, volumeOpen }: Props) => {
-  const { player } = useSelector(selectSpotify);
+const PlayerVolume = ({ modalOpen, volumeOpen }: Props) => {
+  // States
   const [volume, setVolumeState] = useState<string>("");
+  const { player } = useSelector(selectSpotify);
+
+  // Handlers
   const { setVolume } = useSpotifyWebApi();
 
-  // Sets the Volume value
-  const setVolumeHandle = (value: string): void => {
-    setVolumeState(value);
-    setVolume!(parseInt(volume));
+  // Sets the Volume value on Spotify Playback SDK
+  const setVolumeHandle: Player.VolumeHandle = (value) => {
+    setVolume(parseInt(value));
   };
 
   // Sets the current device volume value
@@ -31,16 +33,19 @@ const PlayerVolume = ({ modalOpen, container, volumeOpen }: Props) => {
 
   return (
     <div id="volume" className="relative w-8 ">
-      <VolumeIcon
+      <button
         onClick={() => modalOpen("volume")}
-        className={`stroke-current hover:scale-110 transform global-transition ${
+        className={`w-full hover:scale-110 transform global-transition ${
           volumeOpen && "text-indicator"
         }`}
-      />
+      >
+        <VolumeIcon className="stroke-current" />
+      </button>
+
       <motion.div
-        initial={false}
+        initial="closed"
         animate={volumeOpen ? "open" : "closed"}
-        variants={container}
+        variants={modalVariants}
         className="absolute left-0  mt-4 w-60 flex flex-col py-2 px-4 bg-black bg-opacity-70 rounded-md"
       >
         <input
@@ -52,7 +57,8 @@ const PlayerVolume = ({ modalOpen, container, volumeOpen }: Props) => {
           step="10"
           value={volume}
           onChange={(e) => setVolumeState(e.target.value)}
-          onMouseUp={() => setVolumeHandle(volume)}
+          onKeyUp={(e) => e.key === "Enter" && setVolumeHandle(volume)}
+          onClick={() => setVolumeHandle(volume)}
         />
       </motion.div>
     </div>

@@ -7,20 +7,22 @@ import { selectUser } from "../../redux/store";
  * Initialize a Spotify WebPlayback SDK Client to steam audio on.
  */
 export const useSpotifyWebPlayback = () => {
-  const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
+  const [player, setPlayer] = useState<SpotifySDK.Player | undefined>(
+    undefined
+  );
 
   const { spotify } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   // Init Client
   useEffect(() => {
-    if (!spotify.access_token) return;
+    if (!spotify.access_token || player) return;
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
     document.body.appendChild(script);
     (window as any).onSpotifyWebPlaybackSDKReady = () => {
-      const player: Spotify.Player = new window.Spotify.Player({
+      const player: SpotifySDK.Player = new window.Spotify.Player({
         name: "Main Hub",
         getOAuthToken: (cb: any) => {
           cb(spotify.access_token);

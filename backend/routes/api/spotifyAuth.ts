@@ -17,6 +17,7 @@ const scopes: string[] = [
   "user-read-playback-state",
   "user-modify-playback-state",
   "user-read-currently-playing",
+  "user-read-recently-played",
   "user-read-private",
   "user-library-modify",
   "streaming",

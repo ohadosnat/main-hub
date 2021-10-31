@@ -1,15 +1,11 @@
 import { motion } from "framer-motion";
-
-const variants = {
-  start: { y: "0%" },
-  end: { y: "100%" },
-};
+import { LoadingCircleVariants } from "../../utils/animationVariants";
 
 const LoadingCircle = () => {
   return (
     <motion.span
       className="w-4 h-4 rounded-full bg-current"
-      variants={variants}
+      variants={LoadingCircleVariants}
       transition={{
         repeatType: "reverse",
         repeat: Infinity,

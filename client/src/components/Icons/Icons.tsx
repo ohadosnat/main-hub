@@ -353,3 +353,69 @@ export const SkipForwardIcon = (props: SVGProps) => (
     <path d="M26 5V27C26 27.2652 25.8946 27.5196 25.7071 27.7071C25.5196 27.8946 25.2652 28 25 28C24.7348 28 24.4804 27.8946 24.2929 27.7071C24.1054 27.5196 24 27.2652 24 27V17.783L9.04297 26.9235C8.73979 27.1088 8.39272 27.21 8.03747 27.2166C7.68222 27.2233 7.33161 27.1352 7.0217 26.9614C6.7118 26.7876 6.45379 26.5343 6.27422 26.2277C6.09465 25.9211 6 25.5722 6 25.2169V6.78308C6 6.42778 6.09464 6.07889 6.2742 5.7723C6.45376 5.46571 6.71175 5.21249 7.02164 5.03868C7.33153 4.86487 7.68212 4.77675 8.03736 4.78338C8.3926 4.79001 8.73966 4.89116 9.04285 5.07642L24 14.2169V5C24 4.73478 24.1054 4.48043 24.2929 4.29289C24.4804 4.10536 24.7348 4 25 4C25.2652 4 25.5196 4.10536 25.7071 4.29289C25.8946 4.48043 26 4.73478 26 5Z" />
   </SVGComponent>
 );
+export const HistoryIcon = (props: SVGProps) => (
+  <SVGComponent {...props}>
+    <path
+      d="M16 10V16"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M21.1962 19L16 16"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M23.0209 12.4645H28.0209V7.46448"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M23.7782 23.7782C22.2398 25.3166 20.2798 26.3642 18.146 26.7886C16.0122 27.2131 13.8005 26.9952 11.7905 26.1627C9.78049 25.3301 8.06253 23.9202 6.85383 22.1113C5.64514 20.3023 5 18.1756 5 16C5 13.8244 5.64514 11.6977 6.85383 9.88873C8.06253 8.07979 9.78049 6.66989 11.7905 5.83733C13.8005 5.00477 16.0122 4.78693 18.146 5.21137C20.2798 5.6358 22.2398 6.68345 23.7782 8.22183L28.0208 12.4645"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </SVGComponent>
+);
+export const SearchIcon = (props: SVGProps) => (
+  <SVGComponent {...props}>
+    <path
+      d="M14.5 25C20.299 25 25 20.299 25 14.5C25 8.70101 20.299 4 14.5 4C8.70101 4 4 8.70101 4 14.5C4 20.299 8.70101 25 14.5 25Z"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M21.9242 21.925L27.9993 28.0001"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </SVGComponent>
+);
+export const LoadIcon = (props: SVGProps) => (
+  <SVGComponent {...props}>
+    <path
+      d="M10.75 13.7514L16 19L21.25 13.7514"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M16 5V18.9963"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M27 19V26C27 26.2652 26.8946 26.5196 26.7071 26.7071C26.5196 26.8946 26.2652 27 26 27H6C5.73478 27 5.48043 26.8946 5.29289 26.7071C5.10536 26.5196 5 26.2652 5 26V19"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </SVGComponent>
+);

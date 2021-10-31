@@ -7,7 +7,8 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = (props: Props) => {
-  const { value, name, type, onChange, placeholder, startIcon } = props;
+  const { value, name, type, onChange, placeholder, startIcon, className } =
+    props;
   const [showClearBtn, setShowClearBtn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -25,7 +26,9 @@ const Input = (props: Props) => {
       >
         {name}
       </label>
-      <div className="flex bg-gray-100 text-black w-full font-light rounded-md p-2 text-left shadow-sm border border-opacity-20 border-black">
+      <div
+        className={`${className} flex bg-gray-100 text-black w-full font-light rounded-md p-2 text-left shadow-sm border border-opacity-20 border-black`}
+      >
         {startIcon}
         <input
           type={type}

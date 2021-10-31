@@ -11,20 +11,18 @@ import {
 } from "../Icons/Icons";
 
 const MiniPlayer = () => {
-  // Local State
+  // Local & Global State
   const [textColor, setTextColor] = useState("text-skin");
-
-  // Global States
   const { player } = useSelector(selectSpotify);
-  const { skipForward, skipBack, togglePlayer } = useSpotifyWebApi();
 
   // Custom Hooks
+  const { skipForward, skipBack, togglePlayerState } = useSpotifyWebApi();
   const { pathname } = useLocation();
 
   // Sets the correct text color
   useEffect(() => {
-    if (pathname === "/weather") return setTextColor("text-black");
-    return setTextColor("text-skin");
+    if (pathname === "/weather") setTextColor("text-black");
+    else setTextColor("text-skin");
   }, [pathname]);
 
   return (
@@ -35,7 +33,7 @@ const MiniPlayer = () => {
     >
       <button
         className="w-6 hover:scale-110 transform global-transition hover:text-indicator"
-        onClick={() => skipBack!()}
+        onClick={() => skipBack()}
       >
         <SkipBackIcon className="fill-current h-full w-full" />
       </button>
@@ -43,18 +41,18 @@ const MiniPlayer = () => {
         {player?.is_playing ? (
           <PauseIcon
             className="fill-current h-full w-full"
-            onClick={() => togglePlayer!("pause")}
+            onClick={() => togglePlayerState("pause")}
           />
         ) : (
           <PlayIcon
             className="fill-current h-full w-full"
-            onClick={() => togglePlayer!("play")}
+            onClick={() => togglePlayerState("play")}
           />
         )}
       </button>
       <button
         className="w-6 hover:scale-110 transform global-transition hover:text-indicator"
-        onClick={() => skipForward!()}
+        onClick={() => skipForward()}
       >
         <SkipForwardIcon className="fill-current h-full w-full" />
       </button>

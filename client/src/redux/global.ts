@@ -29,16 +29,10 @@ const globalSlice = createSlice({
      */
     setPageTheme: (state, action: PayloadAction<BackgroundColorPayload>) => {
       const { isNight, pathname } = action.payload;
-      if (pathname === "/weather") {
+      if (pathname === "/weather")
         return { ...state, pageTheme: !isNight ? "day" : "night" };
-      }
-      if (pathname === "/player") {
-        return {
-          ...state,
-          pageTheme: "player",
-        };
-      }
-      return { ...state, pageTheme: "" };
+      else if (pathname === "/player") return { ...state, pageTheme: "player" };
+      else return { ...state, pageTheme: "" };
     },
 
     /**
@@ -57,11 +51,9 @@ const globalSlice = createSlice({
       action: PayloadAction<ContainerHeightPayload>
     ) => {
       const { pathname, locationByName } = action.payload;
-      const isHome = pathname === "/";
-      const isSettings = pathname === "/settings";
-      const isWeatherWithoutLocation =
-        pathname === "/weather" && !locationByName;
-      if (isHome || isWeatherWithoutLocation || isSettings) {
+      const condition: boolean =
+        pathname !== "/weather" || (pathname === "/weather" && !locationByName);
+      if (condition) {
         return { ...state, containerHeight: "h-full" };
       }
       return { ...state, containerHeight: "h-full landscape:h-auto" };

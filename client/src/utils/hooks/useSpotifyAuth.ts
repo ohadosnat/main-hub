@@ -51,7 +51,7 @@ const useSpotifyAuth = () => {
    */
   const spotifyLogin = async (code: string): Promise<void> => {
     try {
-      const userCreds: SpotifyAuthRequired = await getInitialTokens(code);
+      const userCreds: Spotify.AuthRequired = await getInitialTokens(code);
       updateUserDoc(user.uid, {
         spotify: { isLogged: true, refresh_token: userCreds.refresh_token },
       });
@@ -105,10 +105,6 @@ const useSpotifyAuth = () => {
   }, [code, user.uid]);
 
   useEffect(() => {
-    // TODO: REMOVE LATER
-    console.log(user.spotify);
-    console.count("user.spotfy rendered");
-
     // when user is empty, don't do anything
     if (!refresh_token || !expires_in) return;
 
@@ -118,7 +114,7 @@ const useSpotifyAuth = () => {
     // after that user loads and have a current access token, start the timer.
     const interval = setInterval(
       () => refreshAccessToken(refresh_token),
-      (expires_in - 60) * 1000
+      (expires_in - 60) * 500
     );
     return () => clearInterval(interval); // cleanup
   }, [refresh_token, expires_in, access_token]);

@@ -1,32 +1,27 @@
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
 import { setDeviceList } from "../../redux/spotify";
 import { selectSpotify } from "../../redux/store";
+import { modalVariants } from "../../utils/animationVariants";
 import { DeviceIcon, MusicNoteIcon } from "../Icons/Icons";
 
 interface Props {
-  modalOpen: (type: "device" | "volume") => void;
+  modalOpen: Player.ModalOpen;
   deviceListOpen: boolean;
-  container: Variants;
   toggleListOpen: (i?: number | undefined) => void;
 }
 
-const DeviceList = ({
-  modalOpen,
-  deviceListOpen,
-  container,
-  toggleListOpen,
-}: Props) => {
+const DeviceList = ({ modalOpen, deviceListOpen, toggleListOpen }: Props) => {
   // Global States
   const { isReady, deviceList } = useSelector(selectSpotify); // redux
   const { selectDevice, getMyDevices } = useSpotifyWebApi(); // context
   const dispatch = useDispatch();
 
   // Select Device Handle - switch device & close the modal.
-  const selectDeviceHandle = (id: string): void => {
-    selectDevice!(id);
+  const selectDeviceHandle: Player.SelectDeviceHandle = (id) => {
+    selectDevice(id);
     toggleListOpen();
   };
 
@@ -37,7 +32,7 @@ const DeviceList = ({
     // get initial device list, when the device list is empty.
     if (deviceList.length === 0) {
       const timer = setTimeout(() => {
-        getMyDevices!().then(
+        getMyDevices().then(
           (devices) => devices && dispatch(setDeviceList(devices))
         );
       }, 1000);
@@ -46,7 +41,7 @@ const DeviceList = ({
 
     // get the current device list every 2secs
     const interval = setInterval(() => {
-      getMyDevices!().then(
+      getMyDevices().then(
         (devices) => devices && dispatch(setDeviceList(devices))
       );
     }, 2000);
@@ -56,16 +51,18 @@ const DeviceList = ({
 
   return (
     <div id="deviceList" className="relative w-8">
-      <DeviceIcon
+      <button
         onClick={() => modalOpen("device")}
-        className={`stroke-current hover:scale-110 transform global-transition ${
+        className={`w-full hover:scale-110 transform global-transition ${
           deviceListOpen && "text-indicator"
         }`}
-      />
+      >
+        <DeviceIcon className="stroke-current" />
+      </button>
       <motion.div
-        initial={false}
+        initial="closed"
         animate={deviceListOpen ? "open" : "closed"}
-        variants={container}
+        variants={modalVariants}
         className="absolute right-0 md:left-0 md:right-auto mt-4 w-60 flex flex-col py-2 px-4 bg-black bg-opacity-70 rounded-md space-y-2"
       >
         {deviceList.length === 0 ? (
@@ -73,8 +70,8 @@ const DeviceList = ({
         ) : (
           deviceList.map((device) => (
             <button
-              onClick={() => selectDeviceHandle(device.id!)}
               key={device.id}
+              onClick={() => device.id && selectDeviceHandle(device.id)}
               className={`flex justify-between items-center text-left ${
                 device.is_active && "text-indicator"
               }`}

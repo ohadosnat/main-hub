@@ -22,7 +22,7 @@ const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (uid) dispatch(setShowModal(false));
+    if (uid || !showModal) dispatch(setShowModal(false));
     else dispatch(setShowModal(true));
   }, [uid]);
 

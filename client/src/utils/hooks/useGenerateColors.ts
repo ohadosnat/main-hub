@@ -1,13 +1,6 @@
 import { useEffect, useState } from "react";
 import { createImage, generateColorPalette, setCSSVariable } from "../colors";
 
-// Initial state for cleaner useState
-const initialState: TcolorPalette = {
-  main: "#000",
-  secondary: "#000",
-  indicator: "#fff",
-};
-
 /**
  * Generates a color palette based on `imgURL`.
  *
@@ -21,7 +14,9 @@ export const useGenerateColors = (imgURL: string): void => {
   const [imageElement, setImageElement] = useState<HTMLImageElement | null>(
     null
   );
-  const [colorPalette, setColorPalette] = useState<TcolorPalette>(initialState);
+  const [colorPalette, setColorPalette] = useState<TcolorPalette | undefined>(
+    undefined
+  );
 
   // each time the image url changes, create a new and set it.
   useEffect(() => {
@@ -34,11 +29,13 @@ export const useGenerateColors = (imgURL: string): void => {
   // when the image changes, generate a color palette based on that
   useEffect(() => {
     if (!imageElement) return;
-    setColorPalette(generateColorPalette(imageElement));
+    const generatedColors = generateColorPalette(imageElement);
+    setColorPalette(generatedColors);
   }, [imageElement]);
 
   // when color palette changes, set the new colors to the global CSS variables
   useEffect(() => {
+    if (!colorPalette) return;
     setCSSVariable("--color-player-main", colorPalette.main);
     setCSSVariable("--color-player-secondary", colorPalette.secondary);
     setCSSVariable("--color-indicator", colorPalette.indicator);

@@ -7,6 +7,7 @@ const initialState: ISpotifySliceState = {
   name: "",
   deviceList: [],
   player: undefined,
+  currentProgress: 0,
 };
 
 const spotifySlice = createSlice({
@@ -65,6 +66,15 @@ const spotifySlice = createSlice({
     },
 
     /**
+     * Sets the current track progress
+     * @param action - the progress value in the song (in ms)
+     * @returns an updated `currentProgress` value.
+     */
+    setProgress: (state, action: PayloadAction<number>) => {
+      return { ...state, currentProgress: action.payload };
+    },
+
+    /**
      * Resets the `state` to the `initialState`
      * @returns the origial `initialState` value
      */
@@ -82,6 +92,7 @@ const spotifySlice = createSlice({
       action: PayloadAction<SpotifyApi.CurrentPlaybackResponse>
     ) => {
       const {
+        currently_playing_type,
         context,
         item,
         device,
@@ -91,7 +102,7 @@ const spotifySlice = createSlice({
         timestamp,
         is_playing,
       } = action.payload;
-      const data: PlaybackState = {
+      const data: Spotify.PlaybackState = {
         context: context
           ? {
               external_urls: { spotify: context?.external_urls?.spotify },
@@ -104,6 +115,7 @@ const spotifySlice = createSlice({
           id: device.id,
           is_active: device.is_active,
         },
+        type: currently_playing_type,
         progress_ms,
         repeat_state,
         shuffle_state,
@@ -132,6 +144,7 @@ export const {
   setIsReady,
   setDeviceList,
   setSpotifyName,
+  setProgress,
   clearPlayerState,
 } = spotifySlice.actions;
 export default spotifySlice.reducer;

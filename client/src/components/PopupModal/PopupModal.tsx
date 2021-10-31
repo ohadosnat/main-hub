@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 import { ExitIcon } from "../Icons/Icons";
 import { useDispatch } from "react-redux";
 import { setShowModal } from "../../redux/global";
-
-const variants = {
-  start: { opacity: 0, y: -20 },
-  end: { opacity: 1, y: 0 },
-};
+import { PopupModalVariants } from "../../utils/animationVariants";
 
 const PopupModal = () => {
   const dispatch = useDispatch();
@@ -29,13 +25,15 @@ const PopupModal = () => {
     <motion.div
       initial="start"
       animate="end"
-      variants={variants}
+      variants={PopupModalVariants}
       className="fixed top-20 md:top-auto md:bottom-28 xl:bottom-6 2xl:bottom-10 py-3 px-9 text-white bg-indicator rounded-xl font-light"
     >
-      <ExitIcon
+      <button
         onClick={handleClose}
-        className="w-7 h-7 stroke-current text-black bg-white rounded-full absolute -top-2 -right-2 transform hover:scale-110 global-transition cursor-pointer"
-      />
+        className="w-7 h-7 text-black bg-white rounded-full absolute -top-2 -right-2 transform hover:scale-110 global-transition cursor-pointer"
+      >
+        <ExitIcon className="stroke-current" />
+      </button>
       {isFirstTime ? (
         <p>
           ✨ It Seems you're new here! ✨ <br />

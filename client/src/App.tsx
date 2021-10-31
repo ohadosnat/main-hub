@@ -14,11 +14,7 @@ import { motion } from "framer-motion";
 import LoadingAnimation from "./components/Loading/LoadingAnimation";
 import { useSpotifyWebPlayback } from "./utils/hooks/useSpotifyWebPlayback";
 import { useSpotifyWebApi } from "./context/spotifyWebApiContext";
-
-const variants = {
-  open: { opacity: 1 },
-  closed: { opacity: 0, display: "hidden" },
-};
+import { AppVariants } from "./utils/animationVariants";
 
 function App() {
   // Global States (Redux)
@@ -54,7 +50,7 @@ function App() {
   }, [pathname, weather.locationByName]);
 
   useEffect(() => {
-    if (pathname === "player") return;
+    if (pathname === "/player") return;
     dispatch(setTheme(theme));
   }, [pathname, theme]);
 
@@ -69,7 +65,7 @@ function App() {
             initial="closed"
             animate="open"
             exit="closed"
-            variants={variants}
+            variants={AppVariants}
             className="fixed inset-0 flex justify-center items-center"
           >
             <LoadingAnimation />
@@ -78,7 +74,7 @@ function App() {
           <motion.section
             initial="closed"
             animate="open"
-            variants={variants}
+            variants={AppVariants}
             className={`${containerHeight} relative text-skin
           bg-main bg-gradient-to-bl from-skin-start via-skin-middle to-skin-end
           xl:h-[70%] xl:w-4/5 xl:rounded-xl xl:overflow-hidden xl:shadow-2xl 2xl:w-[70%]`}
@@ -114,26 +110,38 @@ General
   [x] logout - works
   [x] login - works but need to add input fields for the user to enter his/hers creds.
 
-  - COMMIT AFTER THAT
+  - COMMIT AFTER THAT ✅
 
-  [] take a look at graphql to fetch only the data that I need and make the requests smaller (for both spotify and OpenWeather).
-[] take a look at React Query to see if I can use it to fetch any data more easliy.
+  [x] take a look at graphql to fetch only the data that I need and make the requests smaller (for both spotify and OpenWeather).
+    - only for OpenWeather API, the Spotify's API is being called from a package, so can't control the requests.
+  [x] take a look at React Query to see if I can use it to fetch any data more easliy.
   - update: after looking to it, I could use it for the weather info to save some time but overall it's not a must.
 
 Player
 [x] spotify login in player
-  [] routes requests - user info, playlists, search, song info.
+  [x] routes requests - user info, playlists, search, song info.
+    - used a client wrapper for making requests (not auth)
   [x] player playback functions (current, shuffle, repeat, next/previous, play/pause and such...)
   [] interfaces for each player function:
-    [] search (show by songs, albums, artists, podcasts)
-    [] playlist (song list, name, creator, image, follow/unfollow buttons) - maybe search inside the playlist to filter
+    [x] search (show by songs, albums, artists, podcasts)
+    [] playlist (song list, name, creator, image, follow/unfollow buttons)
+      [?] maybe search inside the playlist to filter
+      [x] info
+      [] un/follow button.
     [] load playlist by link
     [-] player overlay button with the option to like/unlike songs or the current playlist.
     [] see play history (from the api, if not, I'll just save a local state - only the last 10).
     [x] volume
-    [] might add more...
-  []x mini player will have to use the same local spotify state and control the player (and update!)
+    [x] might add more...
+  [x] mini player will have to use the same local spotify state and control the player (and update!)
     [-] maybe show the song info when a song starts to play (for 5 seconds)
+  [-] check for routes, to have the player's menu overlay -  I need this when a user clicks on a playlist or an album it will direct him to the route with the album's info.
+    - If I move between routes, I need to remember the past results in a global state (might add it to the Spotify state under "searchResults")
+    - make the design responsive (should be easy)
+    - routes might be something like that:
+      "player/search" (might add queries = "player/search?search=brockhampton" and fetch data based on that if there is one),
+      "player/search/album/:id" AND "player/search/playlist/:id" - for playlists and albums.
+      UPDATE: Didn't make the final cut, no routes, works great.
 
 Weather
 [] backend/client routes
