@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setDetailedView } from "../../../../redux/spotify";
 import { calcTotalDuration } from "../../../../utils/player";
 import { CircleArrowIcon } from "../../../Icons/Icons";
 import TracksResults from "../Tracks/TracksResults";
 
 interface Props {
   data: SpotifyApi.SingleAlbumResponse | SpotifyApi.SinglePlaylistResponse;
-  setDetailedInfo: React.Dispatch<React.SetStateAction<Player.DetailedView>>;
 }
 
-const DetailedView = ({ data, setDetailedInfo }: Props) => {
+const DetailedView = ({ data }: Props) => {
   // States
   const [totalDuration, setTotalDuration] = useState<string>("");
   const [owner, setOwner] = useState<string>("");
+
+  const dispatch = useDispatch();
 
   // Effects
   useEffect(() => {
@@ -39,7 +42,7 @@ const DetailedView = ({ data, setDetailedInfo }: Props) => {
               className="rounded-2xl md:rounded-none h-full"
             />
             <button
-              onClick={() => setDetailedInfo(undefined)}
+              onClick={() => dispatch(setDetailedView(undefined))}
               className="absolute top-3 left-3 w-8 h-8 text-black rounded-full hover:scale-110 transform global-transition active:text-indicator "
             >
               <CircleArrowIcon className="fill-current" />
@@ -63,6 +66,7 @@ const DetailedView = ({ data, setDetailedInfo }: Props) => {
               results={data.tracks.items}
               withArtist={data.type === "album" ? false : true}
               withTitle={false}
+              isDetailed
             />
           </div>
         </div>

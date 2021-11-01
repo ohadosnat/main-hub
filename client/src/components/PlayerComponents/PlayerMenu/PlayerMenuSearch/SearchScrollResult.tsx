@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
+import usePlayerMenu from "../../../../utils/hooks/usePlayerMenu";
 
 interface Props {
   data: Spotify.FullAlbumResults | SpotifyApi.PlaylistObjectSimplified;
-  setDetailedView: Player.SetDetailedView;
 }
 
-const SearchScrollResult = ({ data, setDetailedView }: Props) => {
+const SearchScrollResult = ({ data }: Props) => {
+  // States & Props
   const { id, type, images, name } = data;
-
   const [artwork, setArtwork] = useState<string>("");
+
+  // Custom Hook
+  const { setDetailedInfo } = usePlayerMenu();
 
   useEffect(() => {
     if (images.length === 0) return setArtwork("/assets/noImage.jpg");
@@ -19,7 +22,7 @@ const SearchScrollResult = ({ data, setDetailedView }: Props) => {
   return (
     <div>
       <button
-        onClick={() => setDetailedView(type, id)}
+        onClick={() => setDetailedInfo(type, id)}
         className="text-left global-transition transform hover:scale-110 cursor-pointer active:scale-95"
       >
         <div

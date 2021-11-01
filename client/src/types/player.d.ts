@@ -45,6 +45,9 @@ declare namespace Player {
     | SpotifyApi.PlayHistoryObject[]
     | undefined;
 
+  /** Possible Track Context Origin */
+  type TrackContext = "detailed" | "search";
+
   /* Functions */
 
   /** Handles the Modal Open State
@@ -78,7 +81,12 @@ declare namespace Player {
 
   /** Handles the user's action, play/pause a track
    * @param type - the player state `play` or `pause`
+   * @param contextURI - `optional` - used to play the selected context (only on `play`)
    * @param trackURI - `optional` - used to play the selected song (only on `play`)
    */
-  type PlayerStateHandle = (type: PlayerStates, trackURI?: string) => void;
+  type PlayerStateHandle = (
+    type: PlayerStates,
+    contextURI?: string,
+    trackURI?: string
+  ) => void;
 }

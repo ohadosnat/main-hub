@@ -6,36 +6,48 @@ import { PauseIcon, PlayIcon } from "../../../Icons/Icons";
 interface Props {
   data: Spotify.Track;
   withArtist?: boolean;
+  isDetailed?: boolean;
 }
 
-const Track = ({ data, withArtist }: Props) => {
-  const { isPlaying, name, uri, artist, duration } = data;
+const Track = ({ data, withArtist, isDetailed }: Props) => {
+  const { isPlaying, name, uri, artist, duration, is_local } = data;
 
-  const { player } = useSelector(selectSpotify);
+  const { player, search } = useSelector(selectSpotify);
   const { togglePlayerState } = useSpotifyWebApi();
 
   // Handles the user's action
-  const playerStateHandle = (type: Player.PlayerStates, trackURI?: string) => {
-    if (type === "play") togglePlayerState(type, trackURI);
-    else togglePlayerState(type);
+  const playerStateHandle: Player.PlayerStateHandle = (
+    type,
+    contextURI,
+    trackURI
+  ) => {
+    if (type === "pause") togglePlayerState(type);
+    else {
+      !isDetailed
+        ? togglePlayerState(type, "search", undefined, trackURI)
+        : togglePlayerState(type, "detailed", contextURI, trackURI);
+    }
   };
 
   return (
     <div
-      className={`flex items-center py-2 border-b 2xl:py-3 ${
-        isPlaying ? "text-indicator" : ""
-      }`}
+      className={`flex items-center py-2 border-b 2xl:py-3
+       ${isPlaying ? "text-indicator" : ""} ${is_local ? "opacity-50" : ""}`}
     >
       <button
+        disabled={is_local}
         onClick={() =>
           playerStateHandle(
-            isPlaying ? "pause" : "play",
-            player?.item.name !== name ? uri : undefined
+            isPlaying && player?.is_playing ? "pause" : "play",
+            isDetailed ? search.detailedView?.payload.uri : undefined,
+            uri
           )
         }
-        className="w-5 h-5 hover:scale-110 transform global-transition"
+        className={`w-5 h-5 hover:scale-110 transform global-transition ${
+          is_local ? "pointer-events-none" : ""
+        }`}
       >
-        {isPlaying ? (
+        {isPlaying && player?.is_playing ? (
           <PauseIcon className="fill-current" />
         ) : (
           <PlayIcon className="fill-current" />

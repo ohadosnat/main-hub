@@ -62,4 +62,8 @@ interface ISpotifySliceState {
   deviceList: SpotifyApi.UserDevice[];
   player: Spotify.PlaybackState | undefined;
   currentProgress: number;
+  search: {
+    results: Player.SearchResults | undefined;
+    detailedView: Player.DetailedView | undefined;
+  };
 }

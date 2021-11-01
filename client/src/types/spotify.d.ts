@@ -58,6 +58,7 @@ declare namespace Spotify {
     uri: string;
     id: string;
     isPlaying: boolean;
+    is_local: boolean;
   }
 
   interface SearchResultsArtist {

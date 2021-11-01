@@ -8,6 +8,10 @@ const initialState: ISpotifySliceState = {
   deviceList: [],
   player: undefined,
   currentProgress: 0,
+  search: {
+    results: undefined,
+    detailedView: undefined,
+  },
 };
 
 const spotifySlice = createSlice({
@@ -72,6 +76,25 @@ const spotifySlice = createSlice({
      */
     setProgress: (state, action: PayloadAction<number>) => {
       return { ...state, currentProgress: action.payload };
+    },
+    /**
+     * Sets the current detailed view info
+     * @param action - the current detailed view data, can be either a `playlist`/`album` object or `undefined`
+     * @returns an updated value of `search.detailedView`
+     */
+    setDetailedView: (state, action: PayloadAction<Player.DetailedView>) => {
+      return {
+        ...state,
+        search: { ...state.search, detailedView: action.payload },
+      };
+    },
+    /**
+     * Sets the current search results
+     * @param action - the search results from the API request
+     * @returns an updated value of `search.results`
+     */
+    setSearchResults: (state, action: PayloadAction<Player.SearchResults>) => {
+      return { ...state, search: { ...state.search, results: action.payload } };
     },
 
     /**
@@ -145,6 +168,8 @@ export const {
   setDeviceList,
   setSpotifyName,
   setProgress,
+  setDetailedView,
+  setSearchResults,
   clearPlayerState,
 } = spotifySlice.actions;
 export default spotifySlice.reducer;

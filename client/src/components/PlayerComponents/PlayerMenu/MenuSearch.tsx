@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useSpotifyWebApi } from "../../../context/spotifyWebApiContext";
+import { setSearchResults } from "../../../redux/spotify";
+import { selectSpotify } from "../../../redux/store";
 import useForm from "../../../utils/hooks/useForm";
 import Button from "../../Button/Button";
 import { SearchIcon } from "../../Icons/Icons";
@@ -9,45 +12,33 @@ import SearchScrollResults from "./PlayerMenuSearch/SearchScrollResults";
 import TracksResults from "./Tracks/TracksResults";
 
 const MenuSearch = () => {
-  const [results, setResults] = useState<Player.SearchResults | undefined>(
-    undefined
-  );
-  const [detailedInfo, setDetailedInfo] =
-    useState<Player.DetailedView>(undefined);
+  // Local & Global States
   const [values, changeHandle] = useForm({ search: "" });
+  const { search } = useSelector(selectSpotify);
 
-  const { search, fetchAlbum, fetchPlaylist } = useSpotifyWebApi();
+  // Handlers
+  const dispatch = useDispatch();
+  const { getSearchResults } = useSpotifyWebApi();
 
   // Fetches data based on search value and set it to the local state.
   const formHandle = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!values.search) return;
-    const results = await search(values.search);
+    const results = await getSearchResults(values.search);
     results &&
-      setResults({
-        albums:
-          results.albums as SpotifyApi.PagingObject<Spotify.FullAlbumResults>,
-        playlist: results.playlists,
-        tracks: results.tracks,
-      });
-  };
-
-  // Sets The current Detailed View Info
-  const setDetailedView: Player.SetDetailedView = async (type, id) => {
-    if (type === "album") {
-      const items = results?.albums?.items.filter((item) => item.id === id);
-      const album = items && (await fetchAlbum(items[0].id));
-      album && setDetailedInfo({ type, payload: album });
-    } else {
-      const items = results?.playlist?.items.filter((item) => item.id === id);
-      const playlist = items && (await fetchPlaylist(items[0].id));
-      playlist && setDetailedInfo({ type, payload: playlist });
-    }
+      dispatch(
+        setSearchResults({
+          albums:
+            results.albums as SpotifyApi.PagingObject<Spotify.FullAlbumResults>,
+          playlist: results.playlists,
+          tracks: results.tracks,
+        })
+      );
   };
 
   return (
     <>
-      {!detailedInfo ? (
+      {!search.detailedView ? (
         <>
           <form
             onSubmit={(e) => formHandle(e)}
@@ -68,21 +59,15 @@ const MenuSearch = () => {
               startIcon={<SearchIcon className="w-5 stroke-current" />}
             />
           </form>
-          {results && (
+          {search.results && (
             <div className="w-full flex flex-col overflow-y-hidden">
               <div className="overflow-y-scroll disable-scrollbars">
                 <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-10 mt-4 w-full">
-                  <SearchScrollResults
-                    results={{ type: "album", payload: results.albums }}
-                    setDetailedView={setDetailedView}
-                  />
-                  <SearchScrollResults
-                    results={{ type: "playlist", payload: results.playlist }}
-                    setDetailedView={setDetailedView}
-                  />
+                  <SearchScrollResults type="album" />
+                  <SearchScrollResults type="playlist" />
                 </div>
                 <TracksResults
-                  results={results.tracks?.items}
+                  results={search.results.tracks?.items}
                   withTitle
                   withArtist
                 />
@@ -92,10 +77,7 @@ const MenuSearch = () => {
         </>
       ) : (
         <div className="w-full h-[90%] -mt-4 lg:text-left py-4 overflow-y-scroll disable-scrollbars lg:overflow-y-hidden">
-          <DetailedView
-            data={detailedInfo.payload}
-            setDetailedInfo={setDetailedInfo}
-          />
+          <DetailedView data={search.detailedView.payload} />
         </div>
       )}
     </>

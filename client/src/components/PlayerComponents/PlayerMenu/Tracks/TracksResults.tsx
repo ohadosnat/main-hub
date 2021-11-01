@@ -1,4 +1,3 @@
-import { nanoid } from "@reduxjs/toolkit";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectSpotify } from "../../../../redux/store";
@@ -8,10 +7,16 @@ import Track from "./Track";
 interface Props {
   withTitle?: boolean;
   withArtist?: boolean;
+  isDetailed?: boolean;
   results: Player.TrackResults;
 }
 
-const TracksResults = ({ withTitle, withArtist, results }: Props) => {
+const TracksResults = ({
+  withTitle,
+  withArtist,
+  isDetailed,
+  results,
+}: Props) => {
   const [tracks, setTracks] = useState<Spotify.Track[]>([]);
   const { player } = useSelector(selectSpotify);
 
@@ -28,11 +33,12 @@ const TracksResults = ({ withTitle, withArtist, results }: Props) => {
         </h2>
       )}
       <div className="w-full text-left">
-        {tracks.map((track) => (
+        {tracks.map((track, index) => (
           <Track
-            key={track.id || nanoid()}
+            key={track.id || index}
             data={track}
             withArtist={withArtist}
+            isDetailed={isDetailed}
           />
         ))}
       </div>

@@ -60,18 +60,20 @@ export const formatResults = (
     duration_ms: number,
     artists: SpotifyApi.ArtistObjectSimplified[],
     uri: string,
-    id: string;
+    id: string,
+    is_local: boolean;
 
   results?.map((item) => {
     if (("track" in item && !item.track) || !item) return; // making sure item.track or item is not null - sometimes it can happen.
     "track" in item
-      ? ({ name, duration_ms, artists, uri, id } = item.track)
-      : ({ name, duration_ms, artists, uri, id } = item);
+      ? ({ name, duration_ms, artists, uri, id, is_local } = item.track)
+      : ({ name, duration_ms, artists, uri, id, is_local } = item);
 
     const flatTrack: Spotify.Track = {
       id,
       uri,
       name,
+      is_local,
       artist: artists[0].name,
       duration: calcMstoMin(duration_ms),
       isPlaying: name === currentSongName,

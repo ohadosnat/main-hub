@@ -141,16 +141,24 @@ export const SpotifyWebApiProvider = ({
   /**
    * Toggles the player between `play` state to `pause` state
    * @param type - type of action `play` or `pause`
-   * @param trackURI - `optional` - the track that will be played.
+   * @param contextType - `optional` - the context origin type.
+   * @param context_uri - `optional` - the context that will be played.
+   * @param uri - `optional` - the track that will be played.
    */
   const togglePlayerState: SpotifyWebApiContext["togglePlayerState"] = async (
     type,
-    trackURI?
+    contextType,
+    context_uri,
+    uri
   ) => {
     try {
-      if (trackURI && type === "play")
-        return await spotify.play({ uris: [trackURI] });
-      type === "play" ? await spotify.play() : await spotify.pause();
+      if (type === "pause") await spotify.pause();
+      else {
+        if (!contextType) await spotify.play();
+        else if (contextType === "detailed" && uri && context_uri)
+          await spotify.play({ context_uri, offset: { uri } });
+        else uri && (await spotify.play({ uris: [uri] }));
+      }
     } catch (error) {
       const errorMessage: ErrorMessage = {
         message: "Failed to toggle playback state",
@@ -243,7 +251,9 @@ export const SpotifyWebApiProvider = ({
    * @param term - the search value
    * @returns search results object
    */
-  const search: SpotifyWebApiContext["search"] = async (term) => {
+  const getSearchResults: SpotifyWebApiContext["getSearchResults"] = async (
+    term
+  ) => {
     try {
       const res = await spotify.search(term, ["track", "playlist", "album"]);
       return res;
@@ -305,7 +315,7 @@ export const SpotifyWebApiProvider = ({
     skipForward,
     skipBack,
     getRecentlyPlayed,
-    search,
+    getSearchResults,
     fetchAlbum,
     fetchPlaylist,
   };

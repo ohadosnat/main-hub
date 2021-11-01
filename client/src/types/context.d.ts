@@ -7,7 +7,9 @@ interface SpotifyWebApiContext {
   setVolume: (value: number) => Promise<void>;
   setPosition: (position: number) => Promise<void>;
   togglePlayerState: (
-    type: Player.PlayerStates,
+    playerState: Player.PlayerStates,
+    contextType?: Player.TrackContext,
+    contextURI?: string,
     trackURI?: string
   ) => Promise<void>;
   toggleShuffle: (state: boolean) => Promise<void>;
@@ -15,7 +17,9 @@ interface SpotifyWebApiContext {
   skipForward: () => Promise<void>;
   skipBack: () => Promise<void>;
   getRecentlyPlayed: () => Promise<SpotifyApi.PlayHistoryObject[] | undefined>;
-  search: (term: string) => Promise<SpotifyApi.SearchResponse | undefined>;
+  getSearchResults: (
+    term: string
+  ) => Promise<SpotifyApi.SearchResponse | undefined>;
   fetchAlbum: (
     id: string
   ) => Promise<SpotifyApi.SingleAlbumResponse | undefined>;
