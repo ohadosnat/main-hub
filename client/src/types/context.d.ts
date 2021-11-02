@@ -26,4 +26,9 @@ interface SpotifyWebApiContext {
   fetchPlaylist: (
     id: string
   ) => Promise<SpotifyApi.SinglePlaylistResponse | undefined>;
+  fetchFullTracks: (
+    type: Player.DetailedViewStates,
+    offset: number,
+    id: string
+  ) => Promise<Player.FullTracksResults>;
 }

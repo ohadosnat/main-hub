@@ -1,3 +1,5 @@
+import { nanoid } from "@reduxjs/toolkit";
+
 /**
  * Converts milliseconds to minutes
  * @param ms the time in milliseconds
@@ -60,17 +62,16 @@ export const formatResults = (
     duration_ms: number,
     artists: SpotifyApi.ArtistObjectSimplified[],
     uri: string,
-    id: string,
     is_local: boolean;
 
-  results?.map((item) => {
+  results?.forEach((item) => {
     if (("track" in item && !item.track) || !item) return; // making sure item.track or item is not null - sometimes it can happen.
     "track" in item
-      ? ({ name, duration_ms, artists, uri, id, is_local } = item.track)
-      : ({ name, duration_ms, artists, uri, id, is_local } = item);
+      ? ({ name, duration_ms, artists, uri, is_local } = item.track)
+      : ({ name, duration_ms, artists, uri, is_local } = item);
 
     const flatTrack: Spotify.Track = {
-      id,
+      id: nanoid(),
       uri,
       name,
       is_local,
@@ -81,4 +82,16 @@ export const formatResults = (
     tracks.push(flatTrack);
   });
   return tracks;
+};
+
+/**
+ * Extracts the `URI` from a given `Spotify URL`
+ * @param url - a spotify url
+ * @returns a spotify `URI`
+ */
+export const extractURI = (url: string): string => {
+  return url
+    .split("https://open.spotify.com/")[1]
+    .replace(/(album|playlist)\//g, "")
+    .split("?")[0];
 };

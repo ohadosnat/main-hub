@@ -38,11 +38,22 @@ declare namespace Player {
     payload: SpotifyApi.SinglePlaylistResponse;
   }
 
+  /** Possible Detailed View Results Responses */
+  type DetailedViewData =
+    | SpotifyApi.SingleAlbumResponse
+    | SpotifyApi.SinglePlaylistResponse
+    | undefined;
+
   /** Possible Track Results Types */
   type TrackResults =
     | SpotifyApi.TrackObjectSimplified[]
     | SpotifyApi.PlaylistTrackObject[]
     | SpotifyApi.PlayHistoryObject[]
+    | undefined;
+
+  type FullTracksResults =
+    | SpotifyApi.AlbumTracksResponse
+    | SpotifyApi.PlaylistTrackResponse
     | undefined;
 
   /** Possible Track Context Origin */
@@ -89,4 +100,10 @@ declare namespace Player {
     contextURI?: string,
     trackURI?: string
   ) => void;
+
+  /**
+   * Fetches the remaning tracks (100 each time) and adds it to the global state.
+   * @param offset - the starting position of the fetch.
+   */
+  type LoadTracks = (offset: number) => Promise<void>;
 }

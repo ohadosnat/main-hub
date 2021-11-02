@@ -1,8 +1,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setDetailedView } from "../../../redux/spotify";
 import { modalVariants } from "../../../utils/animationVariants";
 import { ExitIcon, HistoryIcon, LoadIcon, SearchIcon } from "../../Icons/Icons";
 import MenuHistory from "./MenuHistory";
+import MenuLoad from "./MenuLoad";
 import MenuSearch from "./MenuSearch";
 
 interface Props {
@@ -12,6 +15,17 @@ interface Props {
 
 const PlayerMenuModal = ({ menuOpen, toggleMenuOpen }: Props) => {
   const [activeTab, setActiveTab] = useState<Player.MenuTabs>("search");
+
+  const dispatch = useDispatch();
+
+  const changeTab = (tab: Player.MenuTabs) => {
+    tab === "history"
+      ? setActiveTab("history")
+      : tab === "search"
+      ? setActiveTab("search")
+      : setActiveTab("playlist");
+    dispatch(setDetailedView(undefined));
+  };
 
   return (
     <motion.div
@@ -34,7 +48,7 @@ const PlayerMenuModal = ({ menuOpen, toggleMenuOpen }: Props) => {
         </div>
         <div className="flex-none flex items-center md:w-auto md:mt-0">
           <button
-            onClick={() => setActiveTab("history")}
+            onClick={() => changeTab("history")}
             className={`w-8 h-8  hover:scale-110 transform global-transition ${
               activeTab === "history" ? "text-indicator" : ""
             }`}
@@ -42,7 +56,7 @@ const PlayerMenuModal = ({ menuOpen, toggleMenuOpen }: Props) => {
             <HistoryIcon className="stroke-current" />
           </button>
           <button
-            onClick={() => setActiveTab("search")}
+            onClick={() => changeTab("search")}
             className={`w-8 h-8  hover:scale-110 transform global-transition mx-4 ${
               activeTab === "search" ? "text-indicator" : ""
             }`}
@@ -50,7 +64,7 @@ const PlayerMenuModal = ({ menuOpen, toggleMenuOpen }: Props) => {
             <SearchIcon className="stroke-current" />
           </button>
           <button
-            onClick={() => setActiveTab("playlist")}
+            onClick={() => changeTab("playlist")}
             className={`w-8 h-8  hover:scale-110 transform global-transition ${
               activeTab === "playlist" ? "text-indicator" : ""
             }`}
@@ -61,8 +75,7 @@ const PlayerMenuModal = ({ menuOpen, toggleMenuOpen }: Props) => {
       </div>
       {activeTab === "history" && <MenuHistory activeTab={activeTab} />}
       {activeTab === "search" && <MenuSearch />}
-      {activeTab === "playlist" && <MenuSearch />}
-      {/* FIXME: Playlist load component W.I.P */}
+      {activeTab === "playlist" && <MenuLoad />}
     </motion.div>
   );
 };

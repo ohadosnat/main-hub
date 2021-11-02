@@ -22,7 +22,9 @@ const MenuHistory = ({ activeTab }: Props) => {
 
   return (
     <div className="w-full overflow-y-scroll disable-scrollbars">
-      <div className="-mt-6" aria-hidden></div>
+      <div className="-mb-4 text-sm font-medium italic" aria-hidden>
+        Recently Played Songs might not be accurate.
+      </div>
       <TracksResults withArtist results={tracks} />
     </div>
   );

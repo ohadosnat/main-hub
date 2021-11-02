@@ -89,6 +89,24 @@ const spotifySlice = createSlice({
       };
     },
     /**
+     * Adds new Tracks to the current Detailed View. This happens when a user clicks on the `Load More` button.
+     * @param action - the new tracks.
+     * @returns an updated value of `search.detailedView.payload.tracks.items`
+     */
+    addDetailedViewTracks: (
+      state,
+      action: PayloadAction<
+        SpotifyApi.AlbumTracksResponse | SpotifyApi.PlaylistTrackResponse
+      >
+    ) => {
+      if (state.search.detailedView && action.payload) {
+        const newTracks = action.payload.items;
+        state.search.detailedView.payload.tracks.items.push(
+          ...(newTracks as any)
+        );
+      }
+    },
+    /**
      * Sets the current search results
      * @param action - the search results from the API request
      * @returns an updated value of `search.results`
@@ -171,5 +189,6 @@ export const {
   setDetailedView,
   setSearchResults,
   clearPlayerState,
+  addDetailedViewTracks,
 } = spotifySlice.actions;
 export default spotifySlice.reducer;

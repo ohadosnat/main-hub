@@ -77,7 +77,7 @@ const MenuSearch = () => {
         </>
       ) : (
         <div className="w-full h-[90%] -mt-4 lg:text-left py-4 overflow-y-scroll disable-scrollbars lg:overflow-y-hidden">
-          <DetailedView data={search.detailedView.payload} />
+          <DetailedView />
         </div>
       )}
     </>

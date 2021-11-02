@@ -52,7 +52,7 @@ export const SpotifyWebApiProvider = ({
     return () => clearInterval(interval);
   }, [playerHasAccessToken]);
 
-  // Handlers
+  /* ---Handlers--- */
 
   /** Get Current Playback State and sets it in `Spotify` Global State. */
   const getPlaybackState: SpotifyWebApiContext["getPlaybackState"] =
@@ -302,6 +302,32 @@ export const SpotifyWebApiProvider = ({
     }
   };
 
+  /**
+   * Fetches the remaning track for a playlist/album (based on `type`).
+   * @param type - The type we are fetching - `playlist` or `album`
+   * @param offset - The index of the first item to return (e.g., 100 will fetch from track number 100)
+   * @param id - the `playlist` or `album` ID
+   * @returns - an object with details about the fetch and an array of tracks.
+   * @example
+   * fetchFullTracks("playlist", 100, id); // this will fetch the playlist's tracks from track 100 and on...
+   */
+  const fetchFullTracks: SpotifyWebApiContext["fetchFullTracks"] = async (
+    type,
+    offset,
+    id
+  ) => {
+    try {
+      if (type === "album") return await spotify.getAlbumTracks(id, { offset });
+      else return await spotify.getPlaylistTracks(id, { offset });
+    } catch (error) {
+      const errorMessage: ErrorMessage = {
+        message: `Failed to fetch the ${type} full tracks`,
+        error,
+      };
+      console.error(errorMessage);
+    }
+  };
+
   // Return Values (Functions)
   const values: SpotifyWebApiContext = {
     getPlaybackState,
@@ -318,6 +344,7 @@ export const SpotifyWebApiProvider = ({
     getSearchResults,
     fetchAlbum,
     fetchPlaylist,
+    fetchFullTracks,
   };
   return (
     <SpotifyWebApiContext.Provider value={values}>

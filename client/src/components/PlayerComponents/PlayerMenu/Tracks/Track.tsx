@@ -60,7 +60,7 @@ const Track = ({ data, withArtist, isDetailed }: Props) => {
             !withArtist ? "xl:w-auto xl:ml-4" : ""
           }`}
         >
-          {withArtist && <p>{artist}</p>}
+          {withArtist && <p className="xl:ml-4">{artist}</p>}
           <p className={`${!withArtist ? "xl:text-right xl:w-full" : ""}`}>
             {duration}
           </p>
