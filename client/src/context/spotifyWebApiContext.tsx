@@ -126,9 +126,12 @@ export const SpotifyWebApiProvider = ({
    * Seeks to the given position in the user’s currently playing track.
    * @param position - The position in milliseconds to seek to. Must be a positive number.
    */
-  const setPosition: SpotifyWebApiContext["setPosition"] = async (position) => {
+  const setPosition: SpotifyWebApiContext["setPosition"] = async (
+    position,
+    device_id
+  ) => {
     try {
-      await spotify.seek(Math.floor(position));
+      await spotify.seek(Math.floor(position), { device_id });
     } catch (error) {
       const errorMessage: ErrorMessage = {
         message: "Failed to set seek position",

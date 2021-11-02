@@ -122,15 +122,15 @@ Player
   [x] routes requests - user info, playlists, search, song info.
     - used a client wrapper for making requests (not auth)
   [x] player playback functions (current, shuffle, repeat, next/previous, play/pause and such...)
-  [] interfaces for each player function:
+  [x] interfaces for each player function:
     [x] search (show by songs, albums, artists, podcasts)
-    [] playlist (song list, name, creator, image, follow/unfollow buttons)
-      [?] maybe search inside the playlist to filter
+    [x] playlist (song list, name, creator, image, follow/unfollow buttons)
+      [-] maybe search inside the playlist to filter - for now it'll pass
       [x] info
-      [] un/follow button.
-    [] load playlist by link
+      [x] un/follow button.
+    [x] load playlist by link
     [-] player overlay button with the option to like/unlike songs or the current playlist.
-    [] see play history (from the api, if not, I'll just save a local state - only the last 10).
+    [x] see play history (from the api, if not, I'll just save a local state - only the last 10).
     [x] volume
     [x] might add more...
   [x] mini player will have to use the same local spotify state and control the player (and update!)
@@ -141,7 +141,9 @@ Player
     - routes might be something like that:
       "player/search" (might add queries = "player/search?search=brockhampton" and fetch data based on that if there is one),
       "player/search/album/:id" AND "player/search/playlist/:id" - for playlists and albums.
-      UPDATE: Didn't make the final cut, no routes, works great.
+    [x] UPDATE: Didn't make the final cut, no routes, works great.
+
+  - COMMIT AFTER THAT ✅
 
 Weather
 [] backend/client routes
@@ -150,6 +152,8 @@ Weather
   [] + might save some weather info on localStorage since it's not sensitive data,
     and I can reduce API calls if I have the data already can also add a timestamp to see if the data is not too old.
 [] set up an interval to update every 1 hour (maybe even more to reduce calls)
+  [] instead of interval, I can add a "refresh" button at the top that also have "last updated at: 14:20" - this will reduce the api calls
+    - (MAYBE) when a user enters the "weather" page, fetch the data ONLY IF the data is 5 hours old.
 [] update the overlay's tempature with the current one.
 
 OPTIONALS:

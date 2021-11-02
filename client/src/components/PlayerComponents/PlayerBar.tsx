@@ -17,7 +17,7 @@ const PlayerBar = () => {
     const { clientWidth } = e.currentTarget;
     const duration = player.item.duration_ms;
     const seekPosition = (e.nativeEvent.offsetX / clientWidth) * duration!;
-    setPosition(seekPosition);
+    setPosition(seekPosition, player.device.id!);
   };
 
   // Sets the current progress in a song.
