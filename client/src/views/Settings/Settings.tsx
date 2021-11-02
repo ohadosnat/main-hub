@@ -8,7 +8,6 @@ import { clearPlayerState, setCode } from "../../redux/spotify";
 import { logout } from "../../utils/auth";
 import Input from "../../components/Input/Input";
 import useForm from "../../utils/hooks/useForm";
-import locationChangeHandle from "../../utils/locationFormHandle";
 import {
   CircleArrowIcon,
   EarthIcon,
@@ -18,6 +17,7 @@ import {
   UserIcon,
   WaveIcon,
 } from "../../components/Icons/Icons";
+import { locationFormHandle } from "../../utils/weather";
 
 const Settings = () => {
   // Input
@@ -43,17 +43,10 @@ const Settings = () => {
     dispatch(clearPlayerState());
   };
 
-  // Form Submit - Location Change
-  const formHandle = (e: React.FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-    locationChangeHandle(values.location);
-    values.location = "";
-  };
-
   // Sets the current showInput value based if the user have a location set.
   useEffect(() => {
     if (!weather.locationByName || !uid) return setShowInput(true);
-    setShowInput(false);
+    else setShowInput(false);
   }, [uid, weather.locationByName]);
 
   // happens after clicking on the spotify login button
@@ -122,7 +115,7 @@ const Settings = () => {
             {showInput ? (
               <form
                 className="w-full flex flex-col items-center space-y-2"
-                onSubmit={formHandle}
+                onSubmit={(e) => locationFormHandle(e, values)}
               >
                 <Input
                   type="text"

@@ -17,6 +17,10 @@ app.use(express.urlencoded({ extended: true }));
 const spotifyRoute = require("./routes/api/spotify");
 app.use("/api/spotify", spotifyRoute);
 
+// Weather API Route
+const WeatherRoute = require("./routes/api/weather");
+app.use("/api/weather", WeatherRoute);
+
 app.get("/", (req, res) => {
   res.json({ message: "hey, welcome" });
 });

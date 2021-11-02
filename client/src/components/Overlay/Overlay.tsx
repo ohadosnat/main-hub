@@ -1,23 +1,8 @@
-/* 
-TODO:
-[x] change divs to buttons
-[x] current time
-[] degrees
-[x] mini play buttons (prev, next, play/pause)
-  [x] connect to the real player
-[x] links to different pages
-    [x] music
-    [x] nav
-    [x] home
-[x] current page indicator
-[x] mini player state (open/closed)
-  - won't be open/closed, instead it will dispatch actions to the global spotify state (redux)
-*/
-
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { selectSpotify } from "../../redux/store";
+import { selectSpotify, selectWeather } from "../../redux/store";
 import { useIsNotMobile } from "../../utils/hooks/useMediaQuery";
+import { kelvinToCelcius } from "../../utils/weather";
 import { MenuIcon, NavigationIcon, MusicNoteIcon } from "../Icons/Icons";
 import MiniPlayer from "../MiniPlayer/MiniPlayer";
 
@@ -29,11 +14,12 @@ interface Props {
 const Overlay = ({ clock, pathname }: Props) => {
   const isNotMobile = useIsNotMobile();
   const { player } = useSelector(selectSpotify);
+  const { forecast } = useSelector(selectWeather);
 
   return (
     <header>
       <h3 className="text-2xl font-medium flex justify-start select-none absolute top-6 left-6 md:top-10 md:left-10 z-[99]">
-        30°c
+        {forecast && kelvinToCelcius(forecast.current.temp)}°c
       </h3>
       <h3 className="text-2xl font-medium col-start-3 flex justify-end select-none absolute top-6 right-6 md:top-10 md:right-10 z-[99]">
         {clock}

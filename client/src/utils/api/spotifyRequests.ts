@@ -8,10 +8,10 @@ import axios, { AxiosResponse } from "axios";
  * @returns an authorize URL to login to Spotify
  */
 const getAuthorizeURL = async (pathname: string): Promise<string> => {
-  const authorizeURL: AxiosResponse<authorizeURL, any> = await axios.post(
-    "http://localhost:5000/api/spotify/auth/createURL",
-    { pathname }
-  );
+  const authorizeURL: AxiosResponse<Spotify.authorizeURL, any> =
+    await axios.post("http://localhost:5000/api/spotify/auth/createURL", {
+      pathname,
+    });
   return authorizeURL.data.url;
 };
 
@@ -20,8 +20,10 @@ const getAuthorizeURL = async (pathname: string): Promise<string> => {
  * @param code - The authorization code returned in the callback in the Authorization Code flow.
  * @returns object with `access_token`, `refresh_token`, `expires_in`
  */
-const getInitialTokens = async (code: string): Promise<SpotifyAuthRequired> => {
-  const res: AxiosResponse<SpotifyAuthRequired> = await axios.post(
+const getInitialTokens = async (
+  code: string
+): Promise<Spotify.AuthRequired> => {
+  const res: AxiosResponse<Spotify.AuthRequired> = await axios.post(
     "http://localhost:5000/api/spotify/auth/login",
     { code }
   );
@@ -37,7 +39,7 @@ const getInitialTokens = async (code: string): Promise<SpotifyAuthRequired> => {
 const refreshTokens = async (
   refreshToken: string = ""
 ): Promise<{ access_token: string; expires_in: number }> => {
-  const res: AxiosResponse<SpotifyAuthRequired> = await axios.post(
+  const res: AxiosResponse<Spotify.AuthRequired> = await axios.post(
     "http://localhost:5000/api/spotify/auth/refresh",
     { refreshToken }
   );

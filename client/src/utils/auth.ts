@@ -24,7 +24,7 @@ const initialUserDoc: IUserSliceState = {
   theme: "light",
   weather: {
     locationByName: "",
-    locatoinByCords: [],
+    locationByCoords: [],
   },
   spotify: {
     isLogged: false,

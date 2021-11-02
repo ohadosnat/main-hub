@@ -4,7 +4,7 @@ import Content from "./views/Content/Content";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectGlobal, selectUser } from "./redux/store";
+import { selectGlobal, selectUser, selectWeather } from "./redux/store";
 import { useClock } from "./utils/hooks/useClock";
 import { setPageTheme, setContainerHeight, toggleNight } from "./redux/global";
 import { setTheme } from "./redux/user";
@@ -15,9 +15,12 @@ import LoadingAnimation from "./components/Loading/LoadingAnimation";
 import { useSpotifyWebPlayback } from "./utils/hooks/useSpotifyWebPlayback";
 import { useSpotifyWebApi } from "./context/spotifyWebApiContext";
 import { AppVariants } from "./utils/animationVariants";
+import { useWeather } from "./utils/hooks/useWeather";
+import { generateTimestamp } from "./utils/weather";
 
 function App() {
   // Global States (Redux)
+  const { forecast } = useSelector(selectWeather);
   const { weather, theme } = useSelector(selectUser);
   const { isNight, pageTheme, containerHeight, isLoading } =
     useSelector(selectGlobal);
@@ -30,16 +33,21 @@ function App() {
   useSpotifyAuth();
   useSpotifyWebPlayback();
   useSpotifyWebApi();
+  const { setForecastHandle } = useWeather();
 
   // useEffects
+
+  // Toggles Night Theme (Weather) after 19:00
   useEffect(() => {
     dispatch(toggleNight(clock));
   }, [clock]);
 
+  // App's Page Theme Effect (weather, player, general)
   useEffect(() => {
     dispatch(setPageTheme({ pathname, isNight }));
   }, [pathname, isNight]);
 
+  // App's Container Height Effect
   useEffect(() => {
     dispatch(
       setContainerHeight({
@@ -49,10 +57,24 @@ function App() {
     );
   }, [pathname, weather.locationByName]);
 
+  // App's Theme Effect (dark/light)
   useEffect(() => {
     if (pathname === "/player") return;
     dispatch(setTheme(theme));
   }, [pathname, theme]);
+
+  // Forecast Update Effect
+  useEffect(() => {
+    if (pathname !== "/weather" || !forecast) return;
+
+    // Checks if the save is outdated (5 hours)
+    const forecastSave = localStorage.getItem("save"); // Local Storage
+    const data: Weather.WeatherLocalSave =
+      forecastSave && JSON.parse(forecastSave);
+    const currentTime = generateTimestamp();
+    currentTime - data.time < 18000 &&
+      setForecastHandle(forecast.lat, forecast.lon);
+  }, [pathname]);
 
   return (
     <div className={`${pathname !== "/player" && theme} ${pageTheme}`}>
@@ -91,9 +113,6 @@ function App() {
 export default App;
 
 /*
-
-
-
 TODO:
 
 General
@@ -146,15 +165,15 @@ Player
   - COMMIT AFTER THAT ✅
 
 Weather
-[] backend/client routes
-[] util functions
-[] local redux state
-  [] + might save some weather info on localStorage since it's not sensitive data,
-    and I can reduce API calls if I have the data already can also add a timestamp to see if the data is not too old.
-[] set up an interval to update every 1 hour (maybe even more to reduce calls)
+[x] backend/client routes
+[x] util functions
+[x] local redux state
+  [x] + might save some weather info on localStorage since it's not sensitive data,
+    [x] and I can reduce API calls if I have the data already can also add a timestamp to see if the data is not too old.
+[-] set up an interval to update every 1 hour (maybe even more to reduce calls)
   [] instead of interval, I can add a "refresh" button at the top that also have "last updated at: 14:20" - this will reduce the api calls
-    - (MAYBE) when a user enters the "weather" page, fetch the data ONLY IF the data is 5 hours old.
-[] update the overlay's tempature with the current one.
+  [x] (MAYBE) when a user enters the "weather" page, fetch the data ONLY IF the data is 5 hours old.
+[x] update the overlay's tempature with the current one.
 
 OPTIONALS:
 

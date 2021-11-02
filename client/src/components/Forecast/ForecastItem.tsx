@@ -1,34 +1,41 @@
 import { useEffect, useState } from "react";
-import { IWeather, WeatherDaily } from "../../types/weather";
-import { calcAvgTemp, getHours } from "../../utils/weather";
+import {
+  calcAvgTemp,
+  getDate,
+  getHours,
+  kelvinToCelcius,
+} from "../../utils/weather";
 
 interface Props {
-  type: "hourly" | "daily";
-  data: IWeather | WeatherDaily;
+  data: Weather.HourlyForecastItem | Weather.DailyForecastItem;
 }
 
-function ForecastItem({ data, type }: Props) {
+function ForecastItem({ data }: Props) {
   const [tempValue, setTempValue] = useState<number>(0);
-  const [timeValue, setTimeValue] = useState<number>(0);
+  const [timeValue, setTimeValue] = useState<number | string>(0);
 
   useEffect(() => {
-    setTimeValue(getHours(data.dt));
-    if (type === "daily") {
-      const { min, max } = (data as WeatherDaily).temp;
-      return setTempValue(calcAvgTemp(min, max));
+    if (data.type === "daily") {
+      setTimeValue(getDate(data.payload.dt));
+      const { min, max } = data.payload.temp;
+      const avg = calcAvgTemp(min, max);
+      return setTempValue(kelvinToCelcius(avg));
+    } else {
+      setTimeValue(getHours(data.payload.dt));
     }
-    setTempValue((data as IWeather).temp);
-  }, []);
+    setTempValue(kelvinToCelcius(data.payload.temp));
+  }, [data]);
 
   return (
     <div
-      key={data.dt}
+      key={data.payload.dt}
       className="mr-4 flex flex-col justify-center items-center lg:text-lg xl:mr-6 xl:mt-6"
     >
-      <p className="">{timeValue}:00</p>
+      {data.type === "hourly" ? <p>{timeValue}:00</p> : <p>{timeValue}</p>}
+      {/* <p>{timeValue}:00</p> */}
       <img
-        src={`/assets/icons/weather/${data.weather[0].icon}.svg`}
-        alt={`${data.weather[0].description}`}
+        src={`/assets/icons/weather/${data.payload.weather[0].icon}.svg`}
+        alt={`${data.payload.weather[0].description}`}
         className="h-12 w-12 fill-current"
       />
       <p className="lg:text-lg">{tempValue}&deg;c</p>

@@ -1,11 +1,12 @@
 import Forecast from "../../components/Forecast/Forecast";
-import { dummyWeather } from "../../mocks/weather-data-mocks"; // FIXME: TEMP DATA - SHOULD BE FROM GLOBAL STATE AND NOT LOCAL!
-import { selectUser } from "../../redux/store";
+import { selectUser, selectWeather } from "../../redux/store";
 import { useSelector } from "react-redux";
 import WeatherEmptyState from "./WeatherEmptyState";
+import { kelvinToCelcius } from "../../utils/weather";
 
 const Weather = () => {
   const { weather } = useSelector(selectUser);
+  const { forecast } = useSelector(selectWeather);
 
   return (
     <div className="h-full w-full flex flex-col md:justify-center lg:flex-row lg:items-center">
@@ -23,20 +24,23 @@ const Weather = () => {
 
       {!weather.locationByName ? (
         <WeatherEmptyState />
-      ) : (
+      ) : forecast ? (
         <>
           <div className="my-6 px-6 text-center cursor-default flex flex-col justify-center md:mt-0 lg:my-0 lg:px-0 lg:mr-0 lg:flex-grow">
-            <h3>Israel</h3>
             <h2 className="mb-1 text-4xl font-bold">
               {weather.locationByName}
             </h2>
             <p className="font-rubik capitalize mb-2">
-              {dummyWeather.current.weather[0].description}
+              {forecast?.current.weather[0].description}
             </p>
-            <h1 className="text-8xl my-2">{dummyWeather.current.temp}°c</h1>
+            <h1 className="text-8xl my-2">
+              {kelvinToCelcius(forecast?.current.temp!)}°c
+            </h1>
           </div>
           <Forecast />
         </>
+      ) : (
+        <p className="text-2xl font-medium">🌎 Loading Forecast... 🌎</p>
       )}
     </div>
   );

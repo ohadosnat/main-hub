@@ -14,7 +14,7 @@ interface IUserSliceState {
   theme: "light" | "dark";
   weather: {
     locationByName: string;
-    locatoinByCords: [number, number] | [];
+    locationByCoords: [number, number] | [];
   };
   spotify: Spotify.Auth & { isLogged: boolean };
 }
@@ -66,4 +66,11 @@ interface ISpotifySliceState {
     results: Player.SearchResults | undefined;
     detailedView: Player.DetailedView | undefined;
   };
+}
+
+/* ---Weather-- */
+
+/** `Weather` Slice State - used in Redux Global State  */
+interface WeatherSliceState {
+  forecast: Weather.OneCallDataResponse | undefined;
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { setAuthorizeURL } from "../../redux/spotify";
@@ -8,7 +8,7 @@ import {
   getAuthorizeURL,
   refreshTokens,
   getInitialTokens,
-} from "../api/spotify";
+} from "../api/spotifyRequests";
 import { updateUserDoc } from "../firesbase/updateUserDoc";
 
 /**

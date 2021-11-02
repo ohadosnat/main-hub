@@ -1,4 +1,3 @@
-import { dummyWeather } from "../../mocks/weather-data-mocks";
 import ForecastItem from "./ForecastItem";
 import { useEffect, useRef } from "react";
 import {
@@ -9,13 +8,15 @@ import {
 import { handleScrollClick } from "../../utils/scroll";
 import { CircleArrowIcon } from "../Icons/Icons";
 import { useScrollArrows } from "../../utils/hooks/useScrollArrows";
+import { useSelector } from "react-redux";
+import { selectWeather } from "../../redux/store";
 
 interface Props {
   type: "hourly" | "daily";
 }
 
 const ForecastItemsWrapper = ({ type }: Props) => {
-  const { hourly, daily } = dummyWeather; // TODO: Should be from global state
+  const { forecast } = useSelector(selectWeather);
 
   const ref = useRef(null);
 
@@ -69,13 +70,16 @@ const ForecastItemsWrapper = ({ type }: Props) => {
           <div className="flex w-max">
             {/* Forecast Item */}
             {type === "hourly"
-              ? hourly
+              ? forecast?.hourly
                   .slice(0, 12)
                   .map((item) => (
-                    <ForecastItem key={item.dt} data={item} type={type} />
+                    <ForecastItem
+                      key={item.dt}
+                      data={{ type, payload: item }}
+                    />
                   ))
-              : daily.map((item) => (
-                  <ForecastItem key={item.dt} data={item} type={type} />
+              : forecast?.daily.map((item) => (
+                  <ForecastItem key={item.dt} data={{ type, payload: item }} />
                 ))}
           </div>
         </div>

@@ -1,23 +1,15 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectGlobal, selectUser } from "../../redux/store";
 import useForm from "../../utils/hooks/useForm";
-import locationChangeHandle from "../../utils/locationFormHandle";
 import Input from "../../components/Input/Input";
 import { EarthIcon } from "../../components/Icons/Icons";
+import { locationFormHandle } from "../../utils/weather";
 
 const WeatherEmptyState = () => {
-  // const [inputValue, setInputValue] = useState<string>("");
   const [values, changeHandle] = useForm({ location: "" });
   const { uid } = useSelector(selectUser);
   const { message } = useSelector(selectGlobal);
-
-  const formHandle = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    locationChangeHandle(values.location);
-    console.log("✨sent!"); //FIXME: make a dispatch to add a new location (set the data and then fetch (inside the reducer))
-  };
 
   // If there's no user, return this state.
   if (!uid) {
@@ -50,7 +42,7 @@ const WeatherEmptyState = () => {
       </p>
       <form
         className="w-full md:w-4/6 lg:w-3/6 px-6 flex flex-col md:flex-row md:space-x-2 space-y-4 md:space-y-0"
-        onSubmit={(e) => formHandle(e)}
+        onSubmit={(e) => locationFormHandle(e, values)}
       >
         <Input
           type="text"

@@ -5,19 +5,23 @@ import { setLocationName } from "../redux/user";
 /**
  * Handles the user's location value (locally and on Firestore).
  * @param location - the input value.
- * @param setShowInput - `optional`, if needed, can set the input visibility to the user.
  */
-const locationChangeHandle = (
-  location: string,
-  setShowInput?: React.Dispatch<React.SetStateAction<boolean>>
-): void => {
+const locationChangeHandle = async (location: string): Promise<void> => {
   if (!location) {
     store.dispatch(setMessage("Please enter a location 🌎"));
     setTimeout(() => store.dispatch(setMessage("")), 2000);
     return;
+  } else if (
+    location.toLowerCase() ===
+    store.getState().user.weather.locationByName.toLowerCase()
+  ) {
+    store.dispatch(setMessage("Please a different location 🌎"));
+    setTimeout(() => store.dispatch(setMessage("")), 2000);
+    return;
+  } else {
+    store.dispatch(setLocationName(location));
+    store.dispatch(setMessage(""));
   }
-  store.dispatch(setLocationName(location));
-  store.dispatch(setMessage(""));
 };
 
 export default locationChangeHandle;

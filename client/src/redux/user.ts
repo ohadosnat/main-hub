@@ -11,7 +11,7 @@ const initialState: IUserSliceState = {
   theme: "light",
   weather: {
     locationByName: "",
-    locatoinByCords: [],
+    locationByCoords: [],
   },
   spotify: {
     isLogged: false,
@@ -52,6 +52,17 @@ export const userSlice = createSlice({
      */
     setLocationName: (state, action: PayloadAction<string>) => {
       updateUserDoc(state.uid, { "weather.locationByName": action.payload });
+    },
+    /**
+     * Updates the Location's coordinates on `Firestore`
+     * @param action - `latitude` and `longitude` values
+     * @exampe setLocationCoords({lat: 34, lon: 42})
+     */
+    setLocationCoords: (state, action: PayloadAction<Weather.Coord>) => {
+      const { lat, lon } = action.payload;
+      updateUserDoc(state.uid, {
+        "weather.locationByCoords": [lat, lon],
+      });
     },
     /**
      * Sets the `user`'s doc theme value based and the global CSS variable `--color-indicator` on the `payload`'s value.
@@ -98,6 +109,7 @@ export const userSlice = createSlice({
 
 export const {
   setLocationName,
+  setLocationCoords,
   setTheme,
   setUser,
   setSpotifyCredentials,

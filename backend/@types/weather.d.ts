@@ -1,32 +1,65 @@
-//  interface WeatherObject {
-//   main: string;
-//   description: string;
-//   icon: string;
-// }
-
-//  interface WeatherDaily {
-//   dt: number;
-//   temp: { min: number; max: number };
-//   weather: WeatherObject[];
-// }
-
-//  interface IWeather {
-//   dt: number;
-//   temp: number;
-//   weather: WeatherObject[];
-// }
-
-//  interface IWeatherAPI {
-//   current: IWeather;
-//   hourly: IWeather[];
-//   daily: WeatherDaily[];
-// }
-
 declare namespace Weather {
   /** Response from route /api/location */
-  interface LocationCoordsResponse {
+  interface CurrentWeatherResponse {
     message: string;
-    data: Coord;
+    data: CurrentWeatherDataResponse;
+  }
+  /** Data  */
+  interface CurrentWeatherDataResponse {
+    coord: Coord;
+    weather: Weather[];
+    base: string;
+    main: Main;
+    visibility: number;
+    wind: Wind;
+    clouds: Clouds;
+    dt: number;
+    sys: Sys;
+    timezone: number;
+    id: number;
+    name: string;
+    cod: number;
+  }
+
+  interface Clouds {
+    all: number;
+  }
+
+  interface Coord {
+    lon: number;
+    lat: number;
+  }
+
+  interface Main {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    humidity: number;
+    sea_level: number;
+    grnd_level: number;
+  }
+
+  interface Sys {
+    type: number;
+    id: number;
+    country: string;
+    sunrise: number;
+    sunset: number;
+  }
+
+  interface Weather {
+    id: number;
+    main: string;
+    description: string;
+    icon: string;
+  }
+
+  interface Wind {
+    speed: number;
+    deg: number;
+    gust: number;
   }
 
   /** Response Object from `api/weather/forecast` route
@@ -51,13 +84,6 @@ declare namespace Weather {
     daily: DailyForecast[];
   }
 
-  interface Weather {
-    id: number;
-    main: string;
-    description: string;
-    icon: string;
-  }
-
   /** Standard Weather Object from `OpenWeather API` */
   interface ForecastObject {
     dt: number;
@@ -79,26 +105,15 @@ declare namespace Weather {
   }
 
   /** Daily Forecast Object from `OpenWeather API` */
-  interface DailyForecast {
-    dt: number;
+  interface DailyForecast extends ForecastObject {
     sunrise: number;
     sunset: number;
     moonrise: number;
     moonset: number;
     moon_phase: number;
-    temp: Temp;
-    feels_like: FeelsLike;
-    pressure: number;
-    humidity: number;
-    dew_point: number;
-    wind_speed: number;
-    wind_deg: number;
-    wind_gust: number;
-    weather: Weather[];
-    clouds: number;
     pop: number;
     rain?: number;
-    uvi: number;
+    temp: Temp;
   }
 
   interface FeelsLike {
@@ -115,25 +130,5 @@ declare namespace Weather {
     night: number;
     eve: number;
     morn: number;
-  }
-
-  interface Coord {
-    lon: number;
-    lat: number;
-  }
-
-  interface HourlyForecastItem {
-    type: "hourly";
-    payload: Weather.ForecastObject;
-  }
-
-  interface DailyForecastItem {
-    type: "daily";
-    payload: Weather.DailyForecast;
-  }
-
-  interface WeatherLocalSave {
-    time: number;
-    save: Weather.OneCallDataResponse;
   }
 }
