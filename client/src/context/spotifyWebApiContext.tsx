@@ -39,7 +39,8 @@ export const SpotifyWebApiProvider = ({
       .then(
         ({ display_name }) =>
           display_name && dispatch(setSpotifyName(display_name))
-      );
+      )
+      .catch((err) => console.error(err));
   }, [access_token]);
 
   // Get User's Current Playback every 1 second.

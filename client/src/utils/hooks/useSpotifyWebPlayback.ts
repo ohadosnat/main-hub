@@ -37,11 +37,14 @@ export const useSpotifyWebPlayback = () => {
   // Connect Client
   useEffect(() => {
     if (!player) return;
-    player.connect().then((success: boolean) => {
-      if (success) {
-        dispatch(setIsReady(success));
-      }
-    });
+    player
+      .connect()
+      .then((success: boolean) => {
+        if (success) {
+          dispatch(setIsReady(success));
+        }
+      })
+      .catch((err) => console.error(err));
   }, [player]);
 
   useEffect(() => {

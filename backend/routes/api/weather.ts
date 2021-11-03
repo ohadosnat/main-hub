@@ -1,5 +1,5 @@
 import express from "express";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import dotenv from "dotenv";
 const router = express.Router();
 dotenv.config();

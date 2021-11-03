@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import morgan from "morgan";
+import helmet from "helmet";
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -12,6 +13,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet());
 
 // Spotify API Route
 const spotifyRoute = require("./routes/api/spotify");

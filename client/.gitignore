@@ -6,3 +6,4 @@ dist-ssr
 .env
 */mocks
 .netlify
+src/views/TestingZone.tsx

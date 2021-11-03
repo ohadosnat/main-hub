@@ -36,7 +36,6 @@ const Content = () => {
           <Route path="/player" exact component={Player} />
           <Route path="/weather" exact component={Weather} />
           <Route path="/settings" exact component={Settings} />
-          <Route path="/testing" exact component={TestingZone} />
           <ProtectedRoute
             {...protectedProps}
             component={Login}
@@ -49,7 +48,9 @@ const Content = () => {
             exact
             path="/signup"
           />
-          <Route path="/">no match, 404 page</Route>
+          <Route path="/">
+            ⚒ This page might be under constructions or it doesn't exists ⚒
+          </Route>
         </Switch>
       </AnimatePresence>
     </main>
