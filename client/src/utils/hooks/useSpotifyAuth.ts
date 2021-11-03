@@ -96,7 +96,7 @@ const useSpotifyAuth = () => {
   useEffect(() => {
     if (isLogged) return;
     generateAuthorizeURL(pathname);
-  }, []);
+  }, [isLogged]);
 
   // After the user clicks the authorization url, send a login request to the server.
   useEffect(() => {

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { IApps } from "../../views/Home/Home";
 
 const AppIconWrapper = ({ name, icon }: IApps) => {
   return (

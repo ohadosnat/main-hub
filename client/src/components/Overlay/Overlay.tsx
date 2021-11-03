@@ -19,7 +19,7 @@ const Overlay = ({ clock, pathname }: Props) => {
   return (
     <header>
       <h3 className="text-2xl font-medium flex justify-start select-none absolute top-6 left-6 md:top-10 md:left-10 z-[99]">
-        {forecast && kelvinToCelcius(forecast.current.temp)}°c
+        {forecast && `${kelvinToCelcius(forecast.current.temp)}°c`}
       </h3>
       <h3 className="text-2xl font-medium col-start-3 flex justify-end select-none absolute top-6 right-6 md:top-10 md:right-10 z-[99]">
         {clock}

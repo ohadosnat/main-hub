@@ -11,7 +11,7 @@ export const useSpotifyWebPlayback = () => {
     undefined
   );
 
-  const { spotify } = useSelector(selectUser);
+  const { spotify, uid } = useSelector(selectUser);
   const dispatch = useDispatch();
 
   // Init Client
@@ -43,4 +43,8 @@ export const useSpotifyWebPlayback = () => {
       }
     });
   }, [player]);
+
+  useEffect(() => {
+    if (!uid) player?.disconnect();
+  }, [uid]);
 };

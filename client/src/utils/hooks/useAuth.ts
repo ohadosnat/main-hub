@@ -60,11 +60,6 @@ const useAuth = () => {
     const unsubscribe: Unsubscribe = onSnapshot(
       docRef,
       (doc) => {
-        console.group("snapshot");
-        console.count("doc snapshot fetched");
-        console.table(doc.data());
-        console.groupEnd();
-
         const data = doc.data();
         data && dispatch(setUser(data as IUserSliceState));
       },
