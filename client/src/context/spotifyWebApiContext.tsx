@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectSpotify, selectUser } from "../redux/store";
-import { setPlayer, setSpotifyName } from "../redux/spotify";
+import { clearSpotifyState, setPlayer, setSpotifyName } from "../redux/spotify";
 // Packages
 import Spotify from "spotify-web-api-js";
 
@@ -35,7 +35,8 @@ export const SpotifyWebApiProvider = ({
 
   // Set user's access token then gets the current user's display name
   useEffect(() => {
-    if (!access_token || !isLogged) return;
+    if (!access_token) return;
+
     spotify.setAccessToken(access_token);
     setIsToken(true);
     spotify
@@ -45,17 +46,17 @@ export const SpotifyWebApiProvider = ({
           display_name && dispatch(setSpotifyName(display_name))
       )
       .catch((err) => console.error(err));
-  }, [access_token, isLogged]);
+  }, [access_token]);
 
   // Get User's Current Playback every 1 second.
   useEffect(() => {
-    if (!playerHasAccessToken) return;
+    if (!playerHasAccessToken || !isLogged) return;
     const interval = setInterval(() => {
       getPlaybackState();
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [playerHasAccessToken]);
+  }, [playerHasAccessToken, isLogged]);
 
   /* ---Handlers--- */
 

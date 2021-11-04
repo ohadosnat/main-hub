@@ -28,11 +28,10 @@ const useSpotifyAuth = () => {
 
   /**
    * Generates a new authorization url for logging in to Spotify
-   * @param pathname - he page that made the request, used for spotify's `redirect` after logging in.
    */
-  const generateAuthorizeURL = async (pathname: string): Promise<void> => {
+  const generateAuthorizeURL = async (): Promise<void> => {
     try {
-      const url: string = await getAuthorizeURL(pathname);
+      const url: string = await getAuthorizeURL();
       dispatch(setAuthorizeURL(url));
     } catch (error) {
       const errorMessage = {
@@ -95,7 +94,7 @@ const useSpotifyAuth = () => {
   // Initial State.
   useEffect(() => {
     if (isLogged) return;
-    generateAuthorizeURL(pathname);
+    else generateAuthorizeURL();
   }, [isLogged]);
 
   // After the user clicks the authorization url, send a login request to the server.

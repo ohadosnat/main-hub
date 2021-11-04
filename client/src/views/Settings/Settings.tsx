@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { clearPlayerState, setCode } from "../../redux/spotify";
+import { clearSpotifyState, setCode } from "../../redux/spotify";
 import { clearSpotifyCredentials, setTheme } from "../../redux/user";
 import { selectGlobal, selectSpotify, selectUser } from "../../redux/store";
 // Hooks & Utils
@@ -41,7 +41,7 @@ const Settings = () => {
   // Clears the Spotify Global State & The users tokens (global & Firestore)
   const spotifyLogout = (): void => {
     dispatch(clearSpotifyCredentials(uid));
-    dispatch(clearPlayerState());
+    dispatch(clearSpotifyState());
   };
 
   // Sets the current showInput value based if the user have a location set.
@@ -56,6 +56,7 @@ const Settings = () => {
     if (code) dispatch(setCode(code));
   }, [search]);
 
+  console.log(authorizeURL);
   return (
     <div className="w-[90%] md:w-auto lg:w-4/12 2xl:w-3/12">
       <Link to="/">

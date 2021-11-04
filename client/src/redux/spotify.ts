@@ -23,7 +23,7 @@ const spotifySlice = createSlice({
      * @param action - the `code` value
      * @returns an updated state with a valid `code` value.
      */
-    setCode: (state, action: PayloadAction<typeof initialState.code>) => {
+    setCode: (state, action: PayloadAction<string>) => {
       return { ...state, code: action.payload };
     },
 
@@ -32,10 +32,7 @@ const spotifySlice = createSlice({
      * @param action - the authorization url
      * @returns an updated state with a authorization url
      */
-    setAuthorizeURL: (
-      state,
-      action: PayloadAction<typeof initialState.authorizeURL>
-    ) => {
+    setAuthorizeURL: (state, action: PayloadAction<string>) => {
       return { ...state, authorizeURL: action.payload };
     },
 
@@ -119,8 +116,8 @@ const spotifySlice = createSlice({
      * Resets the `state` to the `initialState`
      * @returns the origial `initialState` value
      */
-    clearPlayerState: (state) => {
-      return { ...initialState };
+    clearSpotifyState: (state) => {
+      return { ...initialState, authorizeURL: state.authorizeURL };
     },
 
     /**
@@ -188,7 +185,7 @@ export const {
   setProgress,
   setDetailedView,
   setSearchResults,
-  clearPlayerState,
+  clearSpotifyState,
   addDetailedViewTracks,
 } = spotifySlice.actions;
 export default spotifySlice.reducer;

@@ -4,16 +4,12 @@ import axios, { AxiosResponse } from "axios";
 
 /**
  * Gets a authorization URL for logging in to the Spotify API.
- * @param pathname - the page that made the request, used for spotify's `redirect` after logging in.
  * @returns an authorize URL to login to Spotify
  */
-const getAuthorizeURL = async (pathname: string): Promise<string> => {
+const getAuthorizeURL = async (): Promise<string> => {
   const authorizeURL: AxiosResponse<Spotify.authorizeURL, any> =
-    await axios.post(
-      "https://main-hub-backend.herokuapp.com/api/spotify/auth/createURL",
-      {
-        pathname,
-      }
+    await axios.get(
+      "https://main-hub-backend.herokuapp.com/api/spotify/auth/createURL"
     );
   return authorizeURL.data.url;
 };
