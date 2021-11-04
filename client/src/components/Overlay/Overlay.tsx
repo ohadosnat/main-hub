@@ -1,10 +1,14 @@
-import { useSelector } from "react-redux";
+// React Dom
 import { Link } from "react-router-dom";
+// Redux
+import { useSelector } from "react-redux";
 import { selectSpotify, selectWeather } from "../../redux/store";
+// Hooks & Utils
 import { useIsNotMobile } from "../../utils/hooks/useMediaQuery";
 import { kelvinToCelcius } from "../../utils/weather";
-import { MenuIcon, NavigationIcon, MusicNoteIcon } from "../Icons/Icons";
+// Components
 import MiniPlayer from "../MiniPlayer/MiniPlayer";
+import { MenuIcon, NavigationIcon, MusicNoteIcon } from "../Icons/Icons";
 
 interface Props {
   clock: string;

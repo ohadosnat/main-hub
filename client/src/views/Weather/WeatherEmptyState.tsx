@@ -1,10 +1,13 @@
+// Router DOM & Redux
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectGlobal, selectUser } from "../../redux/store";
+// Hooks & Utils
 import useForm from "../../utils/hooks/useForm";
+import { locationFormHandle } from "../../utils/weather";
+// Components
 import Input from "../../components/Input/Input";
 import { EarthIcon } from "../../components/Icons/Icons";
-import { locationFormHandle } from "../../utils/weather";
 
 const WeatherEmptyState = () => {
   const [values, changeHandle] = useForm({ location: "" });

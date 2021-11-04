@@ -1,9 +1,11 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { selectUser } from "../../redux/store";
+import { selectSpotify, selectUser } from "../../redux/store";
+import PlayerControls from "../../components/PlayerComponents/PlayerControls";
 
 const PlayerEmptyState = () => {
   const { uid } = useSelector(selectUser);
+  const { isReady } = useSelector(selectSpotify);
 
   return (
     <>
@@ -24,16 +26,27 @@ const PlayerEmptyState = () => {
           </>
         ) : (
           <>
-            <h1 className="text-2xl font-medium mb-2">
-              🎧 Hey, Please login to your Spotify account to continue 🎧
-            </h1>
-            <p>
-              Visit the{" "}
-              <Link to="/settings" className="font-medium underline">
-                Settings
-              </Link>{" "}
-              page to login to your Spotify account.
-            </p>
+            {isReady ? (
+              <>
+                <h1 className="text-2xl font-medium mb-2">
+                  🎧 Search Music to get started! 🎧
+                </h1>
+                <PlayerControls />
+              </>
+            ) : (
+              <>
+                <h1 className="text-2xl font-medium mb-2">
+                  🎧 Hey, Please login to your Spotify account to continue 🎧
+                </h1>
+                <p>
+                  Visit the{" "}
+                  <Link to="/settings" className="font-medium underline">
+                    Settings
+                  </Link>{" "}
+                  page to login to your Spotify account.
+                </p>
+              </>
+            )}
           </>
         )}
       </div>

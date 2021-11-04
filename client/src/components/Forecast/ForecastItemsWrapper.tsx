@@ -1,15 +1,19 @@
-import ForecastItem from "./ForecastItem";
+// React
 import { useEffect, useRef } from "react";
+// Redux
+import { useSelector } from "react-redux";
+import { selectWeather } from "../../redux/store";
+// Hooks & Utils
 import {
   useIsLarge,
   useIsMedium,
   useIsSmall,
 } from "../../utils/hooks/useMediaQuery";
 import { handleScrollClick } from "../../utils/scroll";
-import { CircleArrowIcon } from "../Icons/Icons";
 import { useScrollArrows } from "../../utils/hooks/useScrollArrows";
-import { useSelector } from "react-redux";
-import { selectWeather } from "../../redux/store";
+// Components
+import ForecastItem from "./ForecastItem";
+import { CircleArrowIcon } from "../Icons/Icons";
 
 interface Props {
   type: "hourly" | "daily";

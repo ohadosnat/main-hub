@@ -1,3 +1,8 @@
+// Redux & Context
+import { useSelector } from "react-redux";
+import { selectSpotify } from "../../redux/store";
+import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
+// Components
 import {
   PauseIcon,
   PlayIcon,
@@ -6,13 +11,11 @@ import {
   SkipBackIcon,
   SkipForwardIcon,
 } from "../Icons/Icons";
-import { useCycle } from "framer-motion";
-import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
-import { useSelector } from "react-redux";
-import { selectSpotify } from "../../redux/store";
 import DeviceList from "./DeviceList";
 import PlayerVolume from "./PlayerVolume";
 import PlayerMenu from "./PlayerMenu/PlayerMenu";
+// Animation
+import { useCycle } from "framer-motion";
 
 const PlayerControls = () => {
   // Global States (Context & Redux)
@@ -85,19 +88,26 @@ const PlayerControls = () => {
           </>
         )}
         {/* Toggle Play/Pause */}
-        <button
-          id="togglePlayState"
-          className="text-player-secondary bg-player-main w-16 h-16 rounded-full flex justify-center items-center hover:scale-110 transform global-transition"
-          onClick={() =>
-            togglePlayerState(player?.is_playing ? "pause" : "play")
-          }
-        >
-          {player?.is_playing ? (
-            <PauseIcon className="fill-current w-7" />
-          ) : (
-            <PlayIcon className="fill-current w-7" />
-          )}
-        </button>
+        {player && (
+          <button
+            id="togglePlayState"
+            className="text-player-secondary bg-player-main w-16 h-16 rounded-full flex justify-center items-center hover:scale-110 transform global-transition"
+            onClick={() =>
+              togglePlayerState(
+                player?.is_playing ? "pause" : "play",
+                false,
+                undefined,
+                player.item.uri
+              )
+            }
+          >
+            {player?.is_playing ? (
+              <PauseIcon className="fill-current w-7" />
+            ) : (
+              <PlayIcon className="fill-current w-7" />
+            )}
+          </button>
+        )}
         {player?.type === "track" && (
           <>
             {/* Skip Forward */}

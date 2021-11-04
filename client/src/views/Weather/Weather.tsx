@@ -1,8 +1,10 @@
-import Forecast from "../../components/Forecast/Forecast";
-import { selectUser, selectWeather } from "../../redux/store";
+// Redux & Utils
 import { useSelector } from "react-redux";
-import WeatherEmptyState from "./WeatherEmptyState";
+import { selectUser, selectWeather } from "../../redux/store";
 import { kelvinToCelcius } from "../../utils/weather";
+// Components
+import WeatherEmptyState from "./WeatherEmptyState";
+import Forecast from "../../components/Forecast/Forecast";
 
 const Weather = () => {
   const { weather } = useSelector(selectUser);

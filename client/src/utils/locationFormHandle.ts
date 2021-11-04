@@ -1,5 +1,5 @@
-import { setMessage } from "../redux/global";
 import store from "../redux/store";
+import { setMessage } from "../redux/global";
 import { setLocationName } from "../redux/user";
 
 /**

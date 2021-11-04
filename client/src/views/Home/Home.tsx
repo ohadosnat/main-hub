@@ -1,9 +1,11 @@
+// React & Redux
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AppIconWrapper from "../../components/AppIconWrapper/AppIconWrapper";
-import PopupModal from "../../components/PopupModal/PopupModal";
 import { setShowModal } from "../../redux/global";
 import { selectGlobal, selectUser } from "../../redux/store";
+// Components
+import AppIconWrapper from "../../components/AppIconWrapper/AppIconWrapper";
+import PopupModal from "../../components/PopupModal/PopupModal";
 import {
   SettingsIcon,
   SpaceIcon,

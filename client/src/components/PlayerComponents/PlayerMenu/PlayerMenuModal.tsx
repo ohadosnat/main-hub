@@ -1,8 +1,11 @@
-import { motion } from "framer-motion";
+// React & Redux
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setDetailedView } from "../../../redux/spotify";
+// Animation
+import { motion } from "framer-motion";
 import { modalVariants } from "../../../utils/animationVariants";
+// Components
 import { ExitIcon, HistoryIcon, LoadIcon, SearchIcon } from "../../Icons/Icons";
 import MenuHistory from "./MenuHistory";
 import MenuLoad from "./MenuLoad";

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { useSpotifyWebApi } from "../../../../context/spotifyWebApiContext";
 import { selectSpotify } from "../../../../redux/store";
+import { useSpotifyWebApi } from "../../../../context/spotifyWebApiContext";
 import { PauseIcon, PlayIcon } from "../../../Icons/Icons";
 
 interface Props {
@@ -24,8 +24,8 @@ const Track = ({ data, withArtist, isDetailed }: Props) => {
     if (type === "pause") togglePlayerState(type);
     else {
       !isDetailed
-        ? togglePlayerState(type, "search", undefined, trackURI)
-        : togglePlayerState(type, "detailed", contextURI, trackURI);
+        ? togglePlayerState(type, false, undefined, trackURI)
+        : togglePlayerState(type, true, contextURI, trackURI);
     }
   };
 

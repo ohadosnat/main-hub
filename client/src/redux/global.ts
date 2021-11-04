@@ -53,7 +53,9 @@ const globalSlice = createSlice({
       const { pathname, locationByName } = action.payload;
       const condition: boolean =
         pathname !== "/weather" || (pathname === "/weather" && !locationByName);
-      if (condition) {
+      if (pathname === "/player") {
+        return { ...state, containerHeight: "h-full landscape:h-[140vh]" };
+      } else if (condition) {
         return { ...state, containerHeight: "h-full" };
       }
       return { ...state, containerHeight: "h-full landscape:h-auto" };

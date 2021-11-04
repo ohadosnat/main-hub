@@ -1,8 +1,11 @@
+// React
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
+// Redux & Context
 import { setProgress } from "../../redux/spotify";
 import { selectSpotify } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
+// Utils
 import { calcProgress, calcMstoMin } from "../../utils/player";
 
 const PlayerBar = () => {

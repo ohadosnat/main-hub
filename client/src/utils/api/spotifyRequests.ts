@@ -9,9 +9,12 @@ import axios, { AxiosResponse } from "axios";
  */
 const getAuthorizeURL = async (pathname: string): Promise<string> => {
   const authorizeURL: AxiosResponse<Spotify.authorizeURL, any> =
-    await axios.post("http://localhost:5000/api/spotify/auth/createURL", {
-      pathname,
-    });
+    await axios.post(
+      "https://main-hub-backend.herokuapp.com/api/spotify/auth/createURL",
+      {
+        pathname,
+      }
+    );
   return authorizeURL.data.url;
 };
 
@@ -24,7 +27,7 @@ const getInitialTokens = async (
   code: string
 ): Promise<Spotify.AuthRequired> => {
   const res: AxiosResponse<Spotify.AuthRequired> = await axios.post(
-    "http://localhost:5000/api/spotify/auth/login",
+    "https://main-hub-backend.herokuapp.com/api/spotify/auth/login",
     { code }
   );
   const { access_token, refresh_token, expires_in } = res.data;
@@ -40,7 +43,7 @@ const refreshTokens = async (
   refreshToken: string = ""
 ): Promise<{ access_token: string; expires_in: number }> => {
   const res: AxiosResponse<Spotify.AuthRequired> = await axios.post(
-    "http://localhost:5000/api/spotify/auth/refresh",
+    "https://main-hub-backend.herokuapp.com/api/spotify/auth/refresh",
     { refreshToken }
   );
   const { access_token, expires_in } = res.data;

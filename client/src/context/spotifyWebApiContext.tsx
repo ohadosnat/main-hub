@@ -1,8 +1,11 @@
+// React
 import { createContext, useContext, useEffect, useState } from "react";
+// Redux
 import { useSelector, useDispatch } from "react-redux";
-import Spotify from "spotify-web-api-js";
+import { selectSpotify, selectUser } from "../redux/store";
 import { setPlayer, setSpotifyName } from "../redux/spotify";
-import { selectUser } from "../redux/store";
+// Packages
+import Spotify from "spotify-web-api-js";
 
 // Context
 const SpotifyWebApiContext = createContext<SpotifyWebApiContext>(
@@ -25,13 +28,14 @@ export const SpotifyWebApiProvider = ({
 
   const dispatch = useDispatch();
 
+  const { player, deviceList } = useSelector(selectSpotify);
   const {
-    spotify: { access_token },
+    spotify: { access_token, isLogged },
   } = useSelector(selectUser);
 
   // Set user's access token then gets the current user's display name
   useEffect(() => {
-    if (!access_token) return;
+    if (!access_token || !isLogged) return;
     spotify.setAccessToken(access_token);
     setIsToken(true);
     spotify
@@ -41,7 +45,7 @@ export const SpotifyWebApiProvider = ({
           display_name && dispatch(setSpotifyName(display_name))
       )
       .catch((err) => console.error(err));
-  }, [access_token]);
+  }, [access_token, isLogged]);
 
   // Get User's Current Playback every 1 second.
   useEffect(() => {
@@ -151,17 +155,31 @@ export const SpotifyWebApiProvider = ({
    */
   const togglePlayerState: SpotifyWebApiContext["togglePlayerState"] = async (
     type,
-    contextType,
+    fromContext,
     context_uri,
     uri
   ) => {
     try {
+      const playerDeviceID = player?.device.id;
+      const mainHubID = deviceList[0].id;
+
+      // finds if the active device is in the device list.
+      const activeDevice = deviceList.find(({ id }) => playerDeviceID === id);
+
+      // if there is no active device, select the app's device.
+      !activeDevice && player && (await selectDevice(mainHubID!)); // select the app's device
+
+      // Player States
       if (type === "pause") await spotify.pause();
       else {
-        if (!contextType) await spotify.play();
-        else if (contextType === "detailed" && uri && context_uri)
-          await spotify.play({ context_uri, offset: { uri } });
-        else uri && (await spotify.play({ uris: [uri] }));
+        const isSameTrack = player?.item.uri === uri;
+        // Play Command
+        spotify.play({
+          context_uri: fromContext ? context_uri : player?.context?.uri!,
+          device_id: !player ? mainHubID! : playerDeviceID!,
+          offset: { uri: uri ? uri : player?.item?.uri },
+          position_ms: isSameTrack ? player?.progress_ms! : undefined,
+        });
       }
     } catch (error) {
       const errorMessage: ErrorMessage = {

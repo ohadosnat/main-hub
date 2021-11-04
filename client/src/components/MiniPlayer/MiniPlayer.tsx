@@ -1,8 +1,11 @@
+// React & Router DOM
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
+// Redux & Context
+import { useSelector } from "react-redux";
 import { selectSpotify } from "../../redux/store";
+import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
+// Icons
 import {
   PauseIcon,
   PlayIcon,
@@ -46,7 +49,9 @@ const MiniPlayer = () => {
         ) : (
           <PlayIcon
             className="fill-current h-full w-full"
-            onClick={() => togglePlayerState("play")}
+            onClick={() =>
+              togglePlayerState("play", false, undefined, player?.item.uri)
+            }
           />
         )}
       </button>

@@ -1,9 +1,12 @@
-import { motion } from "framer-motion";
+// React
 import { useEffect } from "react";
+// Redux
 import { useDispatch, useSelector } from "react-redux";
-import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
 import { setDeviceList } from "../../redux/spotify";
 import { selectSpotify } from "../../redux/store";
+import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
+// Animation & Icons
+import { motion } from "framer-motion";
 import { modalVariants } from "../../utils/animationVariants";
 import { DeviceIcon, MusicNoteIcon } from "../Icons/Icons";
 
@@ -28,25 +31,24 @@ const DeviceList = ({ modalOpen, deviceListOpen, toggleListOpen }: Props) => {
   //  Get the user's active devices
   useEffect(() => {
     if (!isReady) return;
-
     // get initial device list, when the device list is empty.
-    if (deviceList.length === 0) {
+    else if (deviceList.length === 0) {
       const timer = setTimeout(() => {
         getMyDevices().then(
           (devices) => devices && dispatch(setDeviceList(devices))
         );
       }, 1000);
       return () => clearTimeout(timer);
+    } else {
+      // get the current device list every 2secs
+      const interval = setInterval(() => {
+        getMyDevices().then(
+          (devices) => devices && dispatch(setDeviceList(devices))
+        );
+      }, 2000);
+
+      return () => clearInterval(interval);
     }
-
-    // get the current device list every 2secs
-    const interval = setInterval(() => {
-      getMyDevices().then(
-        (devices) => devices && dispatch(setDeviceList(devices))
-      );
-    }, 2000);
-
-    return () => clearInterval(interval);
   }, [isReady, deviceList]);
 
   return (

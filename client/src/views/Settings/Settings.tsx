@@ -1,13 +1,18 @@
-import { useLocation, Link } from "react-router-dom";
+// React & Router Dom
 import { useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+// Redux
 import { useDispatch, useSelector } from "react-redux";
-import Button from "../../components/Button/Button";
-import { selectGlobal, selectSpotify, selectUser } from "../../redux/store";
-import { clearSpotifyCredentials, setTheme } from "../../redux/user";
 import { clearPlayerState, setCode } from "../../redux/spotify";
-import { logout } from "../../utils/auth";
-import Input from "../../components/Input/Input";
+import { clearSpotifyCredentials, setTheme } from "../../redux/user";
+import { selectGlobal, selectSpotify, selectUser } from "../../redux/store";
+// Hooks & Utils
 import useForm from "../../utils/hooks/useForm";
+import { logout } from "../../utils/auth";
+import { locationFormHandle } from "../../utils/weather";
+// Components
+import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
 import {
   CircleArrowIcon,
   EarthIcon,
@@ -17,7 +22,6 @@ import {
   UserIcon,
   WaveIcon,
 } from "../../components/Icons/Icons";
-import { locationFormHandle } from "../../utils/weather";
 
 const Settings = () => {
   // Input
@@ -33,9 +37,6 @@ const Settings = () => {
   const dispatch = useDispatch();
 
   // Handlers
-  const toggleTheme = (type: typeof theme): void => {
-    dispatch(setTheme(type));
-  };
 
   // Clears the Spotify Global State & The users tokens (global & Firestore)
   const spotifyLogout = (): void => {
@@ -100,13 +101,13 @@ const Settings = () => {
             )}
             <div className="flex justify-between space-x-2">
               <Button
-                onClick={() => toggleTheme("dark")}
+                onClick={() => dispatch(setTheme("dark"))}
                 className={`${theme === "dark" && "current"} flex-grow`}
                 title="dark"
                 startIcon={<MoonIcon className="w-7 h-7 stroke-current" />}
               />
               <Button
-                onClick={() => toggleTheme("light")}
+                onClick={() => dispatch(setTheme("light"))}
                 className={`${theme === "light" && "current"} flex-grow`}
                 title="light"
                 startIcon={<SunIcon className="w-7 h-7 stroke-current" />}

@@ -1,14 +1,17 @@
 import React from "react";
+// Redux & Context
 import { useDispatch, useSelector } from "react-redux";
-import { useSpotifyWebApi } from "../../../context/spotifyWebApiContext";
 import { setMessage } from "../../../redux/global";
 import { setDetailedView } from "../../../redux/spotify";
 import { selectGlobal, selectSpotify } from "../../../redux/store";
+import { useSpotifyWebApi } from "../../../context/spotifyWebApiContext";
+// Hooks & Utils
 import useForm from "../../../utils/hooks/useForm";
 import { extractURI } from "../../../utils/player";
+// Components
+import Input from "../../Input/Input";
 import Button from "../../Button/Button";
 import { SearchIcon } from "../../Icons/Icons";
-import Input from "../../Input/Input";
 import DetailedView from "./PlayerMenuSearch/DetailedView";
 
 const MenuLoad = () => {

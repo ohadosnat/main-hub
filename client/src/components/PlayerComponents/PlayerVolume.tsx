@@ -1,10 +1,13 @@
-import { motion } from "framer-motion";
+// React
 import { useEffect, useState } from "react";
+// Redux & Context
 import { useSelector } from "react-redux";
-import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
 import { selectSpotify } from "../../redux/store";
-import { modalVariants } from "../../utils/animationVariants";
+import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
+// Components & Animation
 import { VolumeIcon } from "../Icons/Icons";
+import { motion } from "framer-motion";
+import { modalVariants } from "../../utils/animationVariants";
 
 interface Props {
   modalOpen: Player.ModalOpen;

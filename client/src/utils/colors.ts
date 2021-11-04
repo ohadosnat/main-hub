@@ -1,5 +1,3 @@
-/* --- CSS --- */
-
 /**
  * Set the desired CSS variable to the `value`
  *

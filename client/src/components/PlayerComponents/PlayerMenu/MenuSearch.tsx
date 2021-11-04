@@ -1,15 +1,18 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useSpotifyWebApi } from "../../../context/spotifyWebApiContext";
-import { setSearchResults } from "../../../redux/spotify";
+// Redux & Context
 import { selectSpotify } from "../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setSearchResults } from "../../../redux/spotify";
+import { useSpotifyWebApi } from "../../../context/spotifyWebApiContext";
+// Hooks
 import useForm from "../../../utils/hooks/useForm";
+// Components
+import Input from "../../Input/Input";
 import Button from "../../Button/Button";
 import { SearchIcon } from "../../Icons/Icons";
-import Input from "../../Input/Input";
+import TracksResults from "./Tracks/TracksResults";
 import DetailedView from "./PlayerMenuSearch/DetailedView";
 import SearchScrollResults from "./PlayerMenuSearch/SearchScrollResults";
-import TracksResults from "./Tracks/TracksResults";
 
 const MenuSearch = () => {
   // Local & Global States

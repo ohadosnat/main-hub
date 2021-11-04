@@ -1,9 +1,12 @@
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+// React & React DOM
 import { useEffect, useState } from "react";
-import { ExitIcon } from "../Icons/Icons";
+import { Link } from "react-router-dom";
+// Redux
 import { useDispatch } from "react-redux";
 import { setShowModal } from "../../redux/global";
+// Components & Animation
+import { ExitIcon } from "../Icons/Icons";
+import { motion } from "framer-motion";
 import { PopupModalVariants } from "../../utils/animationVariants";
 
 const PopupModal = () => {

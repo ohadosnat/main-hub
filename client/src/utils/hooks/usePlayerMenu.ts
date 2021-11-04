@@ -1,7 +1,7 @@
+import { selectSpotify } from "../../redux/store";
+import { setDetailedView } from "../../redux/spotify";
 import { useDispatch, useSelector } from "react-redux";
 import { useSpotifyWebApi } from "../../context/spotifyWebApiContext";
-import { setDetailedView } from "../../redux/spotify";
-import { selectSpotify } from "../../redux/store";
 
 /**
  * This hook is used to set the player's menu states

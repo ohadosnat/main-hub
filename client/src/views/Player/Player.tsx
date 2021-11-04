@@ -1,12 +1,16 @@
+// React
 import { useEffect, useState } from "react";
+// Redux
 import { useSelector } from "react-redux";
-import PlayerBar from "../../components/PlayerComponents/PlayerBar";
-import PlayerControls from "../../components/PlayerComponents/PlayerControls";
 import { selectSpotify, selectUser } from "../../redux/store";
+// Hooks & Utils
+import { calcMstoMin } from "../../utils/player";
 import { setCSSVariable } from "../../utils/colors";
 import { useGenerateColors } from "../../utils/hooks/useGenerateColors";
-import { calcMstoMin } from "../../utils/player";
+// Components
 import PlayerEmptyState from "./PlayerEmptyState";
+import PlayerBar from "../../components/PlayerComponents/PlayerBar";
+import PlayerControls from "../../components/PlayerComponents/PlayerControls";
 
 const Player = () => {
   // Local & Global States
@@ -22,16 +26,17 @@ const Player = () => {
   useGenerateColors(trackImage);
 
   useEffect(() => {
-    /* if it's not a track, OR if the track image is undefined, OR the image is the same (same album) */
+    /* if it's not a track, OR if the track image is undefined */
     if (player?.type !== "track" || !player?.item.album?.images)
       return setTrackImage("/assets/playerPlaceholder.jpg");
 
+    /* if the image is not the same */
     const image = player.item.album.images[0].url;
     image !== trackImage && setTrackImage(image);
-  }, [player?.item.album?.images[0].url]);
+  }, [player?.item.album?.images]);
 
   useEffect(() => {
-    setCSSVariable("--bg-artwork", `url(${trackImage})`);
+    setCSSVariable("--bg-artwork", `url("${trackImage}")`);
   }, [trackImage]);
 
   if (!spotify.isLogged || !player) return <PlayerEmptyState />;
@@ -39,7 +44,7 @@ const Player = () => {
   return (
     <>
       <div
-        className={`global-transition text-white bg-artwork bg-center bg-no-repeat bg-cover absolute inset-0 flex justify-center items-center px-8 md:p-10`}
+        className={`global-transition text-white bg-center bg-artwork bg-no-repeat bg-cover absolute inset-0 flex justify-center items-center px-8 md:p-10`}
       >
         <div className="absolute bg-black inset-0 opacity-70 z-0" />
         <div className="w-full h-full flex flex-col justify-center items-center md:w-3/5 mx-auto z-[1]">

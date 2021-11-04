@@ -1,8 +1,11 @@
+// React
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// Redux
 import { selectUser } from "../../redux/store";
-import { setLocationCoords } from "../../redux/user";
 import { setForecast } from "../../redux/weather";
+import { setLocationCoords } from "../../redux/user";
+import { useDispatch, useSelector } from "react-redux";
+// Utils & Components
 import { getForecast, getLocationCoords } from "../api/weatherRequests";
 import { generateTimestamp } from "../weather";
 

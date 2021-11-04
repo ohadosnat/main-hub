@@ -1,15 +1,18 @@
+// React
 import { useEffect, useState } from "react";
+// Redux & Context
 import { useDispatch, useSelector } from "react-redux";
-import { useSpotifyWebApi } from "../../../../context/spotifyWebApiContext";
 import {
   setDetailedView,
   addDetailedViewTracks,
 } from "../../../../redux/spotify";
 import { selectSpotify } from "../../../../redux/store";
-import { calcTotalDuration } from "../../../../utils/player";
+import { useSpotifyWebApi } from "../../../../context/spotifyWebApiContext";
+// Utils & Components
 import Button from "../../../Button/Button";
-import { CircleArrowIcon } from "../../../Icons/Icons";
 import TracksResults from "../Tracks/TracksResults";
+import { CircleArrowIcon } from "../../../Icons/Icons";
+import { calcTotalDuration } from "../../../../utils/player";
 
 const DetailedView = () => {
   // Local States
@@ -61,7 +64,7 @@ const DetailedView = () => {
             <img
               src={data?.images[0]?.url || "/assets/noImage.jpg"}
               alt={`${data.name} by ${owner} artwork`}
-              className="rounded-2xl md:rounded-none h-full object-center object-cover xl:w-full"
+              className="rounded-2xl md:rounded-none h-full object-center object-cover w-full"
             />
             <button
               onClick={() => dispatch(setDetailedView(undefined))}

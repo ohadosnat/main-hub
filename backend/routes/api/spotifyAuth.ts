@@ -32,7 +32,7 @@ const spotifyApi = new SpotifyWebApi({
 //Retrieve a URL where the user can give the application permissions.
 router.post("/createURL", (req, res) => {
   const route = req.body.pathname === "/" ? "" : req.body.pathname;
-  spotifyApi.setRedirectURI(`http://localhost:3000${route}`);
+  spotifyApi.setRedirectURI(`https://main-hub.netlify.app${route}`);
   const url = spotifyApi.createAuthorizeURL(scopes, generateRandomString(16));
   res.json({ url });
 });

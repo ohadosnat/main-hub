@@ -1,10 +1,13 @@
-import { onAuthStateChanged, Unsubscribe, User } from "@firebase/auth";
-import { doc, getDoc, onSnapshot } from "@firebase/firestore";
+// React
 import { useEffect } from "react";
+// Redux
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from "../../redux/global";
 import { selectUser } from "../../redux/store";
 import { setUser } from "../../redux/user";
+// Firebase
+import { doc, getDoc, onSnapshot } from "@firebase/firestore";
+import { onAuthStateChanged, Unsubscribe, User } from "@firebase/auth";
 import { auth, database } from "../firesbase/firebaseConfig";
 
 /**

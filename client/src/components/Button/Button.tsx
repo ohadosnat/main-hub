@@ -1,15 +1,9 @@
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   title: string;
   startIcon?: JSX.Element;
 }
 
-type PropsType = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
-> &
-  Props;
-
-const Button = ({ title, startIcon, className, onClick }: PropsType) => {
+const Button = ({ title, startIcon, className, onClick }: Props) => {
   return (
     <button
       onClick={onClick}

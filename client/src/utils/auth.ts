@@ -1,4 +1,4 @@
-/**
+/** INFO
  * Auth utils functions that handles the `user` store, and Firestore's auth state.
  * These functions will @fires
  * @function `signup` - Creates a new user in `Firestore` auth database, creates a new document for the user.
@@ -7,6 +7,7 @@
  * @fires onAuthStateChanged, which is under the @useAuth hook and fetches the user's doc.
  */
 
+// Firebase
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,7 +16,9 @@ import {
 } from "@firebase/auth";
 import { doc, setDoc } from "@firebase/firestore";
 import { auth, database } from "./firesbase/firebaseConfig";
+// Redux
 import store from "../redux/store";
+import { setUser } from "../redux/user";
 import { setMessage } from "../redux/global";
 
 const initialUserDoc: IUserSliceState = {
@@ -33,12 +36,13 @@ const initialUserDoc: IUserSliceState = {
 };
 
 /**
- * Perform a `logout` request to `Firestore`, setting `auth.currentUser` to `null`
+ * Perform a `logout` request to `Firestore`, setting `auth.currentUser` to `null` and clears the `User` Global State.
  * @fires - this function fires the `Firebase` `onAuthStateChanged` which will clear the `user` local state (back to initial state).
  */
 export const logout = async (): Promise<void> => {
   try {
     await signOut(auth);
+    store.dispatch(setUser(null));
   } catch (error) {
     const errorMessage: ErrorMessage = { message: "Failed to logout😢", error };
     store.dispatch(setMessage(errorMessage.message));

@@ -1,13 +1,17 @@
+// React & Router DOM
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Button from "../../components/Button/Button";
-import { EmailIcon, KeyIcon } from "../../components/Icons/Icons";
-import Input from "../../components/Input/Input";
+// Redux
+import { useDispatch, useSelector } from "react-redux";
 import { setMessage } from "../../redux/global";
 import { selectGlobal } from "../../redux/store";
+// Utils
 import { signup } from "../../utils/auth";
 import useForm from "../../utils/hooks/useForm";
+// Components
+import Input from "../../components/Input/Input";
+import Button from "../../components/Button/Button";
+import { EmailIcon, KeyIcon } from "../../components/Icons/Icons";
 
 const Signup = () => {
   const [values, handleChange] = useForm({

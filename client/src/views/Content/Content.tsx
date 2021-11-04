@@ -1,16 +1,19 @@
-import { AnimatePresence } from "framer-motion";
+// React & Router DOM
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Switch, Route, useLocation } from "react-router-dom";
-import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
+// Redux
+import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/store";
+// Components
 import Home from "../Home/Home";
 import Login from "../Login/Login";
-import Player from "../Player/Player";
-import Settings from "../Settings/Settings";
 import Signup from "../Signup/Signup";
-import TestingZone from "../TestingZone";
+import Player from "../Player/Player";
 import Weather from "../Weather/Weather";
+import Settings from "../Settings/Settings";
+import ProtectedRoute from "../../components/ProtectedRoute/ProtectedRoute";
+// Animation
+import { AnimatePresence } from "framer-motion";
 
 const Content = () => {
   const [protectedProps, setProtectedProps] = useState({
@@ -38,8 +41,8 @@ const Content = () => {
           <Route path="/settings" exact component={Settings} />
           <ProtectedRoute
             {...protectedProps}
-            component={Login}
             exact
+            component={Login}
             path="/login"
           />
           <ProtectedRoute

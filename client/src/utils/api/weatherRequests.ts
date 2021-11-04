@@ -7,9 +7,12 @@ import axios, { AxiosResponse } from "axios";
  */
 export const getLocationCoords = async (location: string) => {
   const res: AxiosResponse<Weather.LocationCoordsResponse, any> =
-    await axios.post("http://localhost:5000/api/weather/location", {
-      location,
-    });
+    await axios.post(
+      "https://main-hub-backend.herokuapp.com/api/weather/location",
+      {
+        location,
+      }
+    );
   const data = res.data;
   return data.data;
 };
@@ -21,7 +24,7 @@ export const getLocationCoords = async (location: string) => {
  */
 export const getForecast = async (coords: Weather.Coord) => {
   const res: AxiosResponse<Weather.OneCallResponse, any> = await axios.post(
-    "http://localhost:5000/api/weather/forecast",
+    "https://main-hub-backend.herokuapp.com/api/weather/forecast",
     { coords }
   );
   const data = res.data;

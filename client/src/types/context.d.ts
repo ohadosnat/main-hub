@@ -8,7 +8,7 @@ interface SpotifyWebApiContext {
   setPosition: (position: number, device_id: string) => Promise<void>;
   togglePlayerState: (
     playerState: Player.PlayerStates,
-    contextType?: Player.TrackContext,
+    fromContext?: boolean,
     contextURI?: string,
     trackURI?: string
   ) => Promise<void>;

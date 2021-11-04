@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsReady } from "../../redux/spotify";
+import { setIsReady, clearPlayerState } from "../../redux/spotify";
 import { selectUser } from "../../redux/store";
 
 /**
@@ -48,6 +48,9 @@ export const useSpotifyWebPlayback = () => {
   }, [player]);
 
   useEffect(() => {
-    if (!uid) player?.disconnect();
-  }, [uid]);
+    if ((player && !uid) || !spotify.isLogged) {
+      player?.disconnect();
+      dispatch(clearPlayerState());
+    }
+  }, [uid, spotify.isLogged]);
 };
