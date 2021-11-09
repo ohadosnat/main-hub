@@ -11,7 +11,7 @@ import useForm from "../../utils/hooks/useForm";
 // Components
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import { EmailIcon, KeyIcon } from "../../components/Icons/Icons";
+import { EmailIcon, KeyIcon, UserIcon } from "../../components/Icons/Icons";
 
 const Signup = () => {
   const [values, handleChange] = useForm({
@@ -61,9 +61,9 @@ const Signup = () => {
             name="name"
             type="text"
             startIcon={
-              <KeyIcon className="mr-2 w-7 h-7 stroke-current flex-none" />
+              <UserIcon className="mr-2 w-7 h-7 stroke-current flex-none" />
             }
-            placeholder="Password"
+            placeholder="Name"
             value={values.name}
             onChange={handleChange}
           />

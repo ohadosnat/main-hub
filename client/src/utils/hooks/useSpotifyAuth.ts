@@ -18,12 +18,10 @@ import { updateUserDoc } from "../firesbase/updateUserDoc";
  * @function `refreshAccessToken` - Requset a new Access Token from the server with the user's `Refresh Token`.
  */
 const useSpotifyAuth = () => {
-  const { pathname } = useLocation();
-
   // Global State
-  const user = useSelector(selectUser);
+  const { spotify, uid } = useSelector(selectUser);
   const { code } = useSelector(selectSpotify);
-  const { access_token, refresh_token, expires_in, isLogged } = user.spotify;
+  const { access_token, refresh_token, expires_in, isLogged } = spotify;
   const dispatch = useDispatch();
 
   /**
@@ -45,13 +43,12 @@ const useSpotifyAuth = () => {
   /**
    * Perfom a login request to Spotify API. Fires after `generateAuthorizeURL`.
    * @param code - The authorization code returned in the callback in the Authorization Code flow.
-   * @fires `setSpotifyCredentials` - updates the local `user` state with the new tokens.
    * @fires `updateUserDoc` - updates the `Firebase` user doc with the user's `Refresh Token` and login state.
    */
   const spotifyLogin = async (code: string): Promise<void> => {
     try {
       const userCreds: Spotify.AuthRequired = await getInitialTokens(code);
-      updateUserDoc(user.uid, {
+      updateUserDoc(uid, {
         spotify: { isLogged: true, refresh_token: userCreds.refresh_token },
       });
       window.history.pushState(null, "", window.location.pathname);
@@ -75,7 +72,7 @@ const useSpotifyAuth = () => {
       const res = await refreshTokens(refresh_token);
       dispatch(
         setSpotifyCredentials({
-          ...user.spotify,
+          ...spotify,
           access_token: res.access_token,
           expires_in: res.expires_in,
         })
@@ -99,9 +96,9 @@ const useSpotifyAuth = () => {
 
   // After the user clicks the authorization url, send a login request to the server.
   useEffect(() => {
-    if (!code || !user.uid) return;
+    if (!code || !uid) return;
     spotifyLogin(code);
-  }, [code, user.uid]);
+  }, [code, uid]);
 
   useEffect(() => {
     // when user is empty, don't do anything
