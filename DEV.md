@@ -17,7 +17,8 @@
 
 ## **Workflow**
 
-<!-- ![Workflow Diagram](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6f0a5e02-c99d-40fb-9312-dc1aa9da7a40/Untitled.png) -->
+<img width="1648" alt="Workflow Diagram" src="https://user-images.githubusercontent.com/79900761/140955219-d75b5f40-e3b1-4f9c-8ae4-05d30623accc.png">
+
 
 ### **Early Stage (Understanding):**
 
@@ -25,8 +26,8 @@
 
 <details>
 <summary> <b>Flow</b> - figuring out how the features are going to work.</summary>
-
-<!-- ![App's Flow Diagram](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/28f8deca-7c7d-4157-918c-3d577835df88/Untitled.png) -->
+	
+<img width="1536" alt="App's Flow Diagram" src="https://user-images.githubusercontent.com/79900761/140955310-5077678e-68a8-43cc-ae06-fcb4c8ccbcfa.png">
 
 **Overlay**
 
@@ -239,7 +240,8 @@ interface User {
 
 <details>
 <summary>Diagram</summary>
-<!-- ![Redux Diagram](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/23d0dfc0-15ce-44d8-b2d5-6cf7a3ed37d4/Untitled.png) -->
+
+<img width="784" alt="Redux Diagram" src="https://user-images.githubusercontent.com/79900761/140955455-110a763d-d9db-445a-9248-a05201fd116f.png">
 
 </details>
 
