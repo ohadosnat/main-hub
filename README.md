@@ -1,8 +1,18 @@
-<!-- image -->
+<div align="center">
+  <img width="300" alt="Main Hub Logo" src="https://user-images.githubusercontent.com/79900761/140951577-2e2b0cef-9214-4cb9-8e0f-64b8606f88fd.png">
+  
+  [Enter the main hub now!](http://main-hub.netlify.app/)
 
-# Main Hub
+  `version 1.0.0`
 
-<!-- Table of Contents -->
+</div>
+
+---
+
+**Table of Contents:**
+- [About](https://github.com/ohadosnat/main-hub#about)
+- [Idea](https://github.com/ohadosnat/main-hub#idea)
+- [Process](https://github.com/ohadosnat/main-hub#process) (Design & Development)
 
 ## About
 
