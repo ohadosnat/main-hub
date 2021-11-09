@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { selectUser } from "../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsReady, clearSpotifyState } from "../../redux/spotify";
-import { selectUser } from "../../redux/store";
 
 /**
  * Initialize a Spotify WebPlayback SDK Client to steam audio on.
@@ -51,7 +51,6 @@ export const useSpotifyWebPlayback = () => {
     if ((player && !uid) || !spotify.isLogged) {
       player?.disconnect();
       dispatch(clearSpotifyState());
-      console.log("cleared");
     }
   }, [uid, spotify.isLogged]);
 };

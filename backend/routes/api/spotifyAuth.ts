@@ -8,7 +8,6 @@ dotenv.config();
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
 const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 
-// TODO: might change the scopes later on.
 const scopes: string[] = [
   "playlist-modify-private",
   "playlist-modify-public",

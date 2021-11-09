@@ -15,7 +15,7 @@ import { useWeather } from "./utils/hooks/useWeather";
 import useSpotifyAuth from "./utils/hooks/useSpotifyAuth";
 import { useSpotifyWebPlayback } from "./utils/hooks/useSpotifyWebPlayback";
 // Utils
-import { generateTimestamp } from "./utils/weather";
+import { generateTimestamp, setForecastHandle } from "./utils/weather";
 // Animation
 import { AppVariants } from "./utils/animationVariants";
 import { motion } from "framer-motion";
@@ -39,7 +39,7 @@ function App() {
   useSpotifyAuth();
   useSpotifyWebPlayback();
   useSpotifyWebApi();
-  const { setForecastHandle } = useWeather();
+  useWeather();
 
   // Toggles Night Theme (Weather) after 19:00
   useEffect(() => {

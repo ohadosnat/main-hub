@@ -56,7 +56,6 @@ const Settings = () => {
     if (code) dispatch(setCode(code));
   }, [search]);
 
-  console.log(authorizeURL);
   return (
     <div className="w-[90%] md:w-auto lg:w-4/12 2xl:w-3/12">
       <Link to="/">

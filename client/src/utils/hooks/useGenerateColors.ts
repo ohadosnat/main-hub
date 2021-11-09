@@ -20,7 +20,7 @@ export const useGenerateColors = (imgURL: string): void => {
 
   // each time the image url changes, create a new and set it.
   useEffect(() => {
-    if (imgURL === "") return;
+    if (!imgURL) return;
     createImage(imgURL)
       .then((element) => setImageElement(element))
       .catch((error) => console.error(error));

@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 // Redux
 import { useSelector, useDispatch } from "react-redux";
 import { selectSpotify, selectUser } from "../redux/store";
-import { clearSpotifyState, setPlayer, setSpotifyName } from "../redux/spotify";
+import { setPlayer, setSpotifyName } from "../redux/spotify";
 // Packages
 import Spotify from "spotify-web-api-js";
 
@@ -24,7 +24,8 @@ export const SpotifyWebApiProvider = ({
   children: React.ReactNode;
 }) => {
   const [spotify] = useState(new Spotify());
-  const [playerHasAccessToken, setIsToken] = useState<boolean>(false);
+  const [playerHasAccessToken, setPlayerHasAccessToken] =
+    useState<boolean>(false);
 
   const dispatch = useDispatch();
 
@@ -38,7 +39,7 @@ export const SpotifyWebApiProvider = ({
     if (!access_token) return;
 
     spotify.setAccessToken(access_token);
-    setIsToken(true);
+    setPlayerHasAccessToken(true);
     spotify
       .getMe()
       .then(
@@ -150,13 +151,13 @@ export const SpotifyWebApiProvider = ({
   /**
    * Toggles the player between `play` state to `pause` state
    * @param type - type of action `play` or `pause`
-   * @param contextType - `optional` - the context origin type.
+   * @param isContext - `optional` - is it from a context? `boolean`
    * @param context_uri - `optional` - the context that will be played.
    * @param uri - `optional` - the track that will be played.
    */
   const togglePlayerState: SpotifyWebApiContext["togglePlayerState"] = async (
     type,
-    fromContext,
+    isContext,
     context_uri,
     uri
   ) => {
@@ -176,7 +177,7 @@ export const SpotifyWebApiProvider = ({
         const isSameTrack = player?.item.uri === uri;
         // Play Command
         spotify.play({
-          context_uri: fromContext ? context_uri : player?.context?.uri!,
+          context_uri: isContext ? context_uri : player?.context?.uri!,
           device_id: !player ? mainHubID! : playerDeviceID!,
           offset: { uri: uri ? uri : player?.item?.uri },
           position_ms: isSameTrack ? player?.progress_ms! : undefined,

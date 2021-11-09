@@ -47,9 +47,15 @@ const DetailedView = () => {
   // Remaining Tracks to Load
   useEffect(() => {
     if (!data) return;
-    if (data.tracks.total - data.tracks.items.length < 0) setRemainingTracks(0);
+    else if (data.tracks.total - data.tracks.items.length < 0)
+      setRemainingTracks(0);
     else setRemainingTracks(data.tracks.total - data.tracks.items.length);
   }, [data?.tracks.items]);
+
+  useEffect(() => {
+    const tracks = search.detailedView?.payload.tracks as any;
+    setData((state) => state && { ...state, tracks });
+  }, [search.detailedView?.payload.tracks.items]);
 
   return (
     <>

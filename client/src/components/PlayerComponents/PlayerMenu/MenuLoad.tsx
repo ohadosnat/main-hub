@@ -37,7 +37,7 @@ const MenuLoad = () => {
 
     // formats the url to uri
     const uri = extractURI(url);
-    // if the uri length is less than 22, it means it's not valid
+    // valid uri must be 22 characters
     if (uri.length < 22) {
       dispatch(setMessage("ID is too short, please enter a valid link 😬"));
       setTimeout(() => dispatch(setMessage("")), 3000);

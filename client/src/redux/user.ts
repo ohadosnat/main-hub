@@ -27,7 +27,7 @@ export const userSlice = createSlice({
   reducers: {
     /**
      * Sets the `user`'s LOCAL state based on the provided data.
-     * @param action a `user` object that matches the `UserSliceState` type.
+     * @param action a `user` object that matches the `UserSliceState` type. If the payload is `null`, the state will reset
      * @returns an updated state of the `user` state.
      */
     setUser: (
@@ -43,7 +43,7 @@ export const userSlice = createSlice({
             expires_in: 3600,
           },
         };
-      return { ...initialState }; // reset to initial state when logout.
+      return { ...initialState }; // reset to initial state when logout/payload is null
     },
     /**
      * Sets the `user`'s doc location name value based on the `payload`'s value
@@ -65,7 +65,7 @@ export const userSlice = createSlice({
       });
     },
     /**
-     * Sets the `user`'s doc theme value based and the global CSS variable `--color-indicator` on the `payload`'s value.
+     * Sets the `user`'s doc theme value and the global CSS variable `--color-indicator` based on the `payload`'s value.
      * @param payload - the theme type can be either `light` or `dark` - `string`
      * @example setTheme("light")
      */
